@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>転造ダイス | 株式会社RMS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #f4f7f6;
+            color: #333333;
+        }
+
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: #e60012;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* ページ全体のスクロールを滑らかにする */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 90px auto 40px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            border-bottom: 3px solid #e60012;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #e60012;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 赤い破線（区切り線） */
+        .red-dashed-divider {
+            border: none;
+            border-top: 1px dashed #e60012;
+            /* 赤色の破線 */
+            margin: 25px 0;
+            /* 上下の余白 */
+        }
+
+        /* 製品アイテム全体の囲み */
+        .product-item {
+            margin-bottom: 25px;
+        }
+
+        /* 写真と型番・タイトルの横並びエリア */
+        .product-header {
+            display: flex;
+            /* 横並びにする */
+            align-items: center;
+            /* 上下中央揃え */
+            gap: 20px;
+            /* 写真と文字の間隔 */
+            margin-bottom: 12px;
+            /* 下の説明文との間隔 */
+        }
+
+        /* 製品写真のサイズ調整 */
+        .product-img {
+            width: 82px;
+            /* 写真の幅（お好みで調整してください） */
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* 型番（RF、RCD-RSDなど） */
+        .product-code {
+            font-size: 0.85rem;
+            color: #666666;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* 製品名（ラック形転造ダイスなど） */
+        .product-name {
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin: 4px 0 0 0;
+            color: #333333;
+        }
+
+        /* 説明文 */
+        .product-desc {
+            font-size: 1rem;
+            line-height: 1.7;
+            /* 行間を少し広げて読みやすくする */
+            color: #444444;
+            margin: 0;
+        }
+
+ /* ===================================
+   画面右下の「Page Top」ボタン
+=================================== */
+        .pagetop {
+            position: fixed;
+            /* 画面に対して位置を固定する */
+            bottom: 30px;
+            /* 画面の下から30pxの位置 */
+            right: 30px;
+            /* 画面の右から30pxの位置 */
+            width: 50px;
+            /* ボタンの幅 */
+            height: 50px;
+            /* ボタンの高さ */
+            background-color: #e60012;
+            /* 赤いアクセントカラー */
+            color: #ffffff;
+            /* 文字（矢印）の色 */
+            border-radius: 50%;
+            /* 正方形を「丸」にする設定 */
+
+            /* 矢印（▲）をボタンの真ん中に配置する */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+            /* 下線を消す */
+            font-size: 1.2rem;
+            /* 矢印の大きさ */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* ふんわり浮き上がる影 */
+            z-index: 999;
+            /* 他の要素より手前に表示 */
+
+            /* ▼▼ ここを追加（初期は隠す＆アニメーション設定） ▼▼ */
+            opacity: 0;
+            /* 最初は完全透明にする */
+            visibility: hidden;
+            /* 透明な状態の時にクリックできないように隠す */
+            transition: all 0.3s ease;
+            /* ふわっと表示・非表示する変化の時間 */
+        }
+
+        /* 【追加】JavaScriptでこのクラスがついた時だけ表示する */
+        .pagetop.is-show {
+            opacity: 1;
+            /* 不透明にする */
+            visibility: visible;
+            /* 表示する */
+        }
+
+        .pagetop:hover {
+            background-color: #cc0000;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+
+
+
+        /* マウスを乗せたときの演出 */
+        .pagetop:hover {
+            background-color: #cc0000;
+            /* 少し濃い赤にする */
+            transform: translateY(-5px);
+            /* 少し上に浮き上がる */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="top-line">
+        <a href="index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <main class="container">
+        <h1>転造ダイス</h1>
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 【製品1】 -->
+
+        <div class="product-header">
+            <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i81f2b84a78fb46eb/version/1405299003/%E3%83%A9%E3%83%83%E3%82%AF%E5%BD%A2%E8%BB%A2%E9%80%A0%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                alt="ラック形転造ダイス" class="product-img">
+            <div>
+                <span class="product-code">RF</span>
+                <h3 class="product-name">ラック形転造ダイス</h3>
+            </div>
+        </div>
+        <p class="product-desc">
+            主に自動車部品、電気部品などのインボリュートスプライン セレーション・ねじ・ウォームなどを高精度に転造します。<br>
+            左右（上下）のダイスは等速度でかつ反対方向に運動します。ワークは前後のセンターにより支持され、
+            ダイスが通過する間に転造されます。
+        </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 【製品2】 -->
+        <div class="product-item">
+            <div class="product-header">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i282a8a36ed098ae9/version/1405299027/%E3%83%AD%E3%83%BC%E3%82%BF%E3%83%AA%E3%83%BC%E5%BC%8F%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                    alt="ロータリー式ねじ転造ダイス" class="product-img">
+                <div>
+                    <span class="product-code">RCD-RSD</span>
+                    <h3 class="product-name">ロータリー式ねじ転造ダイス</h3>
+                </div>
+            </div>
+            <p class="product-desc">
+                固定されたセグメントダイスと回転する丸ダイスの間を素材が遊星運動しながら転がる間にねじが転造されます。<br>
+                平ダイス転造盤の往復運動を回転運動に置き換えたものです。生産能力としては各種転造盤の中で最高の方式です。
+            </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 製品3 -->
+        <div class="product-item">
+            <div class="product-header">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/id2a34b1a811cbcce/version/1405299043/%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E4%B8%B8%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                    alt="ロータリー式ねじ転造ダイス" class="product-img">
+                <div>
+                    <span class="product-code">TR</span>
+                    <h3 class="product-name">ねじ転造丸ダイス</h3>
+                </div>
+            </div>
+            <p class="product-desc">
+                一対の丸ダイスを使用し転造する方法です。<br>
+
+                同方向に回転しかつ同じ周速の２個のダイスにより素材にダイスのねじ山を押し込みながら転造する広く一般に使用されている転造方式です。
+            </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 製品4 -->
+        <div class="product-item">
+            <div class="product-header">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/ib3897d5c2fb97886/version/1405299063/%E3%82%BB%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E8%BB%A2%E9%80%A0%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                    alt="ロータリー式ねじ転造ダイス" class="product-img">
+                <div>
+                    <span class="product-code">SR</span>
+                    <h3 class="product-name">セレーション転造丸ダイス</h3>
+                </div>
+            </div>
+            <p class="product-desc">
+                インボリュートスプライン・セレーション等をインフィード又は押し込み式により転造するダイスです。<br>
+                ダイスは研削仕上げされており、転造されたワークの歯面及び精度は高精度な物が得られます。
+            </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 製品5 -->
+        <div class="product-item">
+            <div class="product-header">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i0caba78f87a5b0e3/version/1405299079/%E7%89%B9%E6%AE%8A%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E4%B8%B8%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                    alt="ラック形転造ダイス" class="product-img">
+                <div>
+                    <span class="product-code">TR</span>
+                    <h3 class="product-name">特殊ねじ転造丸ダイス</h3>
+                </div>
+            </div>
+            <p class="product-desc">
+                転造ヘッド又はアタッチメントに取り付けられて使用する特殊な丸ダイスです。<br>
+                ダイスは２個組み、３個組みがあり 鍔付きのねじ、長い軸の一部にねじを転造する場合に使われます。 <br>
+                これらの装置は旋盤や自動盤の主軸チャック等に取り付けて使用されます。
+
+
+            </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 製品6 -->
+        <div class="product-item">
+            <div class="product-header">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/id6504bbd869bcd2a/version/1405299093/%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E5%B9%B3%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                    alt="ラック形転造ダイス" class="product-img">
+                <div>
+                    <span class="product-code">DP</span>
+                    <h3 class="product-name">ねじ転造平ダイス</h3>
+                </div>
+            </div>
+            <p class="product-desc">
+                一対の平ダイスの一方を固定し、他方を平行往復運動させてねじを転造する方式です。<br>
+                ワークは固定ダイスの一端に供給され固定ダイス上を移動し、<br>
+                他端からねじとなって排出される簡単で生産性の良い転造方法です。
+
+
+            </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+        <!-- 製品7 -->
+        <div class="product-item">
+            <div class="product-header">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i3f54bc9dbcf77854/version/1405299111/%E3%82%BF%E3%83%83%E3%83%94%E3%83%B3%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E5%B9%B3%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                    alt="ラック形転造ダイス" class="product-img">
+                <div>
+                    <span class="product-code">T-DP</span>
+                    <h3 class="product-name">タッピンねじ転造平ダイス</h3>
+                </div>
+            </div>
+            <p class="product-desc">
+                自らタッピングでき、ナットの不要なねじを転造するダイスです。<br>
+                ねじ転造平ダイスの技術を基に各種タイプのタッピン用平ダイスの製造を行っています。
+
+
+
+            </p>
+        </div>
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+
+<ul class="business-list">
+    <li>製品の価格については、お問合せください。</li>
+<li></li>
+<li></li>
+
+</ul>
+
+
+        <!-- 赤い破線 -->
+        <hr class="red-dashed-divider">
+        <a href="index.html" class="back-link">← トップページに戻る</a>
+    </main>
+
+<!-- 画面右下のページトップへ戻るボタン -->
+        <a href="#" class="pagetop">▲</a>
+
+    <!-- ▼▼ ここからJavaScriptを追加 ▼▼ -->
+        <script>
+            // 1. ボタン要素を取得する
+            const pageTopBtn = document.querySelector('.pagetop');
+
+            // 2. 画面がスクロールされた時の動きを監視する
+            window.addEventListener('scroll', () => {
+                // 200px以上下にスクロールしたら「.is-show」クラスをつける
+                if (window.scrollY > 200) {
+                    pageTopBtn.classList.add('is-show');
+                } else {
+                    // 200px未満（一番上付近）に戻ったら「.is-show」クラスを外す
+                    pageTopBtn.classList.remove('is-show');
+                }
+            });
+        </script>
+
+</body>
+
+</html>

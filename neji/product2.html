@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>限界ねじゲージ【ISO方式】 | 株式会社RMS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: #e60012;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* ページ全体のスクロールを滑らかにする */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e60012;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+/* 商品名と画像を横並びにするヘッダー枠（画像は右側） */
+.product-header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    border-bottom: 3px solid #e60012; /* 赤色の区切り線 */
+    padding-bottom: 20px;
+}
+
+.product-header-wrap h1 {
+    margin: 0;
+    border-bottom: none; /* 元のh1下線を解除 */
+    font-size: 1.8rem;
+}
+
+/* 右側に配置する画像 */
+.product-header-image {
+    width: 220px;        /* 画像の幅（お好みで調整してください） */
+    flex-shrink: 0;
+}
+
+.product-header-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 説明文エリア（画面中央・テキスト中央揃え） */
+.product-detail-center {
+    max-width: 650px;     /* 説明文枠の最大幅 */
+    margin: 0 auto;       /* ブロック自体を画面中央に配置 */
+    text-align: center;   /* テキストを中央揃え */
+}
+
+.product-detail-center h2 {
+    font-size: 1.3rem;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    color: #111111;
+}
+
+.product-detail-center p {
+    line-height: 1.8;
+    margin-bottom: 25px;
+    color: #444444;
+    font-size: 0.95rem;
+}
+
+/* 特長リスト（中央に配置しつつリスト文頭は揃えて読みやすく） */
+.feature-list {
+    display: inline-block;
+    text-align: left;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+}
+
+.feature-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #333333;
+}
+
+.feature-list li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    color: #e60012;
+    font-size: 0.8rem;
+}
+
+/* 仕様表の中央配置 */
+.spec-table {
+    width: 100%;
+    max-width: 500px;
+    margin: 15px auto 0;
+    border-collapse: collapse;
+    text-align: left; /* 表の中身テキストは左揃え */
+}
+
+.spec-table th, 
+.spec-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+}
+
+.spec-table th {
+    background-color: #f7f8f9;
+    width: 35%;
+    color: #333333;
+    font-weight: bold;
+}
+
+/* 説明エリア全体の囲み */
+.description-section {
+    margin-top: 35px;
+    padding: 25px;
+    background-color: #fafafa; /* うっすらグレーの背景で区切る */
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+}
+
+/* タイトル（説明） */
+.description-title {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #111111;
+    margin-top: 0;
+    margin-bottom: 25px;
+    letter-spacing: 0.1em;
+}
+
+/* 各項目のブロック */
+.description-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.description-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 赤い■アイコン */
+.description-icon {
+    color: #e60012;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+/* テキスト本文 */
+.description-text {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #333333;
+}
+
+/* 合格基準の強調ボックス */
+.judgment-box {
+    background-color: #ffffff;
+    border-left: 4px solid #e60012; /* 左側に赤いワンポイント線 */
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.judgment-box ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.judgment-box li {
+    margin-bottom: 4px;
+}
+
+.judgment-box li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* スマホ対応（画面幅が狭いときは縦並びにする） */
+@media (max-width: 600px) {
+    .product-header-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .product-header-image {
+        width: 100%;
+        max-width: 250px;
+        margin-top: 15px;
+    }
+}
+
+/* 見出し（赤のワンポイント線付き） */
+.product-detail-content h2 {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #111111;
+    border-left: 4px solid #e60012;
+    padding-left: 10px;
+}
+
+.product-detail-content p {
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #444444;
+    font-size: 0.95rem;
+}
+
+/* 特長リスト（箇条書き） */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+}
+
+.feature-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #333333;
+}
+
+.feature-list li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    color: #e60012;            /* 先頭のマークを赤色に */
+    font-size: 0.8rem;
+}
+
+/* スペック・仕様表 */
+.spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.spec-table th, 
+.spec-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+}
+
+.spec-table th {
+    background-color: #f7f8f9;
+    text-align: left;
+    width: 30%;
+    color: #333333;
+    font-weight: bold;
+}
+
+.spec-table td {
+    color: #555555;
+}
+
+/* 一番下のお問い合わせエリア */
+.contact-section {
+    margin-top: 50px;
+    padding: 30px 20px;
+    background-color: #f7f8f9;    /* 薄いグレーの背景 */
+    border-top: 3px solid #e60012; /* 上部に赤いアクセント線 */
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* 「お問い合わせ」見出し */
+.contact-title {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #333333;
+    margin: 0 0 20px 0;
+}
+
+/* TELとEMAILの横並び枠 */
+.contact-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;                  /* TELとEMAILの間隔 */
+    flex-wrap: wrap;            /* 画面が狭いときは自動改行 */
+}
+
+/* 各項目（TEL / EMAIL） */
+.contact-item {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+/* FAX番号など（テキスト表示） */
+.contact-val {
+    color: #e60012;
+}
+
+.contact-label {
+    color: #666666;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+/* 電話番号・メールアドレスのリンク */
+.contact-item a {
+    color: #e60012;             /* 赤色文字 */
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline; /* カーソルを乗せた時に下線 */
+}
+
+/* スマホ表示対応 */
+@media (max-width: 600px) {
+    .contact-box {
+        flex-direction: column;  /* スマホでは縦並びに切り替え */
+        gap: 15px;
+    }
+}
+
+/* スマホ対応（画面幅768px以下で自動的に縦並びにする） */
+@media (max-width: 768px) {
+    .product-detail-layout {
+        flex-direction: column;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="top-line">
+        <a href="../index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <div class="container">
+         <a href="../index.html" class="back-link">← トップページに戻る</a>
+         <!-- ★「../」をつけることで、ひとつ上のフォルダにある index.html に戻れます -->
+        
+        <!-- ▼1. 商品名と画像を横並び（画像は右側） ▼ -->
+    <div class="product-header-wrap">
+        <h1>限界ねじゲージ【ISO方式】</h1>
+        <p>株式会社測範社(SHS)</p>
+        <div class="product-header-image">
+            <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=210x1024:format=jpg/path/s0054f211ee0da790/image/i9f6313f99ac9876d/version/1413170812/image.jpg" alt="限界ねじゲージ【ISO方式】">
+        </div>
+    </div>
+
+    <!-- ▼2. 説明文エリア（中央配置） ▼ -->
+    <div class="product-detail-center">
+        
+        <h2>寸法検査対象製品 </h2>
+        <p>
+            従来のJIS等級 メートルねじ、 ユニファイねじ、管用平行ねじ(PF)用、等
+        </p>
+
+        <div class="description-section">
+    <h3 class="description-title">説明</h3>
+
+    <!-- 1. 概要 -->
+    <div class="description-item">
+        <span class="description-icon">■</span>
+        <div class="description-text">
+            <strong>限界ねじゲージとは</strong><br>
+            測定すべきねじと同じ等級のゲージを使用し、「通り」「止り」という2つの寸法差によって、あらかじめ定められた寸法精度の上限と下限の範囲内にあるかを検査します。
+        </div>
+    </div>
+
+    <!-- 2. 合格判定・使い方 -->
+    <div class="description-item">
+        <span class="description-icon">■</span>
+        <div class="description-text">
+            <strong>合格判定の方法（使い方）</strong>
+            <div class="judgment-box">
+                <ul>
+                    <li><strong>通りゲージ：</strong>無理なくスッと通り抜けること</li>
+                    <li><strong>止りゲージ：</strong>2回転以上ねじ込まれないこと</li>
+                </ul>
+            </div>
+            上記の両方の条件を満たした場合に、等級検査「合格」と判定いたします。
+        </div>
+    </div>
+
+    <!-- 3. 特注・対応領域 -->
+    <div class="description-item">
+        <span class="description-icon">■</span>
+        <div class="description-text">
+            <strong>設計・製作について</strong><br>
+            弊社では、JIS規格限界ねじゲージの量産はもちろん、あらゆる規格の特殊ねじゲージを設計・製作いたします。
+        </div>
+    </div>
+</div>
+
+        <h2>基本仕様</h2>
+        <table class="spec-table">
+            <tr>
+                <th>メーカー</th>
+                <td>株式会社測範社 (SHS)</td>
+            </tr>
+            <tr>
+                <th>方式</th>
+                <td>ISO方式（従来JIS規格）</td>
+            </tr>
+            <tr>
+             
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- ▼ 一番下のお問い合わせブロック ▼ -->
+<div class="contact-section">
+    <h3 class="contact-title">お気軽にお問い合わせ・ご相談ください</h3>
+    
+    <div class="contact-box">
+        <!-- TEL（電話番号） -->
+        <div class="contact-item">
+            <span class="contact-label">TEL:</span>
+            <a href="tel:090-1255-1962">090-1255-1962</a>
+        </div>
+
+<!-- FAX -->
+        <div class="contact-item">
+            <span class="contact-label">FAX:</span>
+            <span class="contact-val">048-928-8028</span>
+        </div>
+
+        <!-- EMAIL（メールアドレス） -->
+        <div class="contact-item">
+            <span class="contact-label">E-MAIL:</span>
+            <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+        </div>
+    
+</div>
+
+</body>
+
+</html>

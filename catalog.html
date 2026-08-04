@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エンドミル | 株式会社RMS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #f4f7f6;
+            color: #333333;
+        }
+
+/* ページ全体のスクロールを滑らかにする */
+        html {
+            scroll-behavior: smooth;
+        } 
+
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: #e60012;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 90px auto 40px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            border-bottom: 3px solid #e60012;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* 追加：メイン画像のスタイル */
+        .hero-image {
+            width: 100%;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #e60012;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 点線の区切り線 */
+        .dotted-divider {
+            border: none;
+            border-top: 2px dotted #cccccc;
+            /* グレーの点線 */
+            margin: 35px 0;
+            /* 上下の余白 */
+        }
+
+        /* 2枚目の画像（リンク付き） */
+        .sub-image {
+            width: 100%;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .sub-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        /* マウスを乗せたときに浮き上がる演出 */
+        .sub-image a:hover img {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+
+      /* ===================================
+   画面右下の「Page Top」ボタン
+=================================== */
+        .pagetop {
+            position: fixed;
+            /* 画面に対して位置を固定する */
+            bottom: 30px;
+            /* 画面の下から30pxの位置 */
+            right: 30px;
+            /* 画面の右から30pxの位置 */
+            width: 50px;
+            /* ボタンの幅 */
+            height: 50px;
+            /* ボタンの高さ */
+            background-color: #e60012;
+            /* 赤いアクセントカラー */
+            color: #ffffff;
+            /* 文字（矢印）の色 */
+            border-radius: 50%;
+            /* 正方形を「丸」にする設定 */
+
+            /* 矢印（▲）をボタンの真ん中に配置する */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+            /* 下線を消す */
+            font-size: 1.2rem;
+            /* 矢印の大きさ */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* ふんわり浮き上がる影 */
+            z-index: 999;
+            /* 他の要素より手前に表示 */
+
+            /* ▼▼ ここを追加（初期は隠す＆アニメーション設定） ▼▼ */
+            opacity: 0;
+            /* 最初は完全透明にする */
+            visibility: hidden;
+            /* 透明な状態の時にクリックできないように隠す */
+            transition: all 0.3s ease;
+            /* ふわっと表示・非表示する変化の時間 */
+        }
+
+        /* 【追加】JavaScriptでこのクラスがついた時だけ表示する */
+        .pagetop.is-show {
+            opacity: 1;
+            /* 不透明にする */
+            visibility: visible;
+            /* 表示する */
+        }
+
+        .pagetop:hover {
+            background-color: #cc0000;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+
+
+
+        /* マウスを乗せたときの演出 */
+        .pagetop:hover {
+            background-color: #cc0000;
+            /* 少し濃い赤にする */
+            transform: translateY(-5px);
+            /* 少し上に浮き上がる */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="top-line">
+        <a href="index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <main class="container">
+        <h1>エンドミル (Endmill) TTK</h1>
+
+        <!-- メイン画像（修正後） -->
+        <div class="hero-image">
+            <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i8792a50ea28afeeb/version/1688199408/image.png"
+                alt="メイン画像">
+        </div>
+
+        <!-- ▼ 1枚目の画像の下にこれを追加 ▼ -->
+
+        <!-- 点線の区切り線 -->
+        <hr class="dotted-divider">
+
+        <!-- 2枚目の画像（クリックでリンク先に移動） -->
+        <div class="sub-image">
+            <!-- href には飛ばしたいURL、src には画像のURLを入れます -->
+            <a href="https://www.youtube.com/user/welspringvideo" target="_blank">
+                <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=650x10000:format=png/path/s0054f211ee0da790/image/iaeaff9f16370a2d7/version/1690071824/image.png"
+                    alt="詳細画像">
+            </a>
+        </div>
+
+        <a href="index.html" class="back-link">← トップページに戻る</a>
+    </main>
+
+<!-- 画面右下のページトップへ戻るボタン -->
+        <a href="#" class="pagetop">▲</a>
+
+    <!-- ▼▼ ここからJavaScriptを追加 ▼▼ -->
+        <script>
+            // 1. ボタン要素を取得する
+            const pageTopBtn = document.querySelector('.pagetop');
+
+            // 2. 画面がスクロールされた時の動きを監視する
+            window.addEventListener('scroll', () => {
+                // 200px以上下にスクロールしたら「.is-show」クラスをつける
+                if (window.scrollY > 200) {
+                    pageTopBtn.classList.add('is-show');
+                } else {
+                    // 200px未満（一番上付近）に戻ったら「.is-show」クラスを外す
+                    pageTopBtn.classList.remove('is-show');
+                }
+            });
+        </script>
+</body>
+
+</html>

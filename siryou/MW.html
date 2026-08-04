@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW処理実績データ・表面機能 | 株式会社RMS</title>
+    <style>
+        :root {
+            --primary-color: #e60012;
+            --accent-orange: #f39c12;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --bg-light: #f8f9fa;
+            --border-color: #d1d5db;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 80px 20px 60px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 上部固定ヘッダー */
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* メインコンテナ */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* セクションヘッダー */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0 30px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: #111;
+        }
+
+        /* 縦並びコンテンツエリア */
+        .vertical-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+
+        .photo-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .photo-wrapper {
+            width: 100%;
+            background-color: var(--bg-light);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .photo-info {
+            padding: 20px;
+        }
+
+        .photo-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .photo-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+            color: #111;
+        }
+
+        /* 横スクロール可能なテーブルラッパー */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 共通テーブルスタイル */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: center;
+            background-color: #fff;
+            min-width: 700px; /* 横スクロールを機能させるための最小幅 */
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #777777;
+            padding: 6px 8px;
+            vertical-align: middle;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+            color: #111;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .data-table td.text-left {
+            text-align: left;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        /* 機能一覧テーブル（2つ目の画像） */
+        .function-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background-color: #fff;
+        }
+
+        .function-table th {
+            background-color: #dbe4d3; /* 画像の淡い緑ヘッダー色 */
+            color: #222;
+            border: 1px solid #888;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .function-table td {
+            border: 1px solid #888;
+            padding: 10px 12px;
+            color: #222;
+        }
+
+        .function-table .header-banner {
+            background-color: #b32438; /* 画像の赤ヘッダー */
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px 6px 0 0;
+            letter-spacing: 0.05em;
+        }
+
+        /* お問い合わせエリア */
+        .contact-section {
+            padding: 30px 20px;
+            background-color: #f7f8f9;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 18px 0;
+        }
+
+        .contact-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-label {
+            color: #666;
+            font-size: 0.85rem;
+            margin-right: 5px;
+        }
+
+        .contact-val {
+            color: var(--primary-color);
+        }
+
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 12px;
+            }
+
+            .contact-box {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .photo-info {
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 上部固定ヘッダー -->
+    <div class="top-line">
+       <a href="../index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <div class="container">
+        <!-- 戻るボタン -->
+        <a href="javascript:history.back();" class="back-link">← 前のページに戻る</a>
+
+        <!-- タイトル -->
+        <div class="section-header">
+            <h1 class="section-title">MW処理実績データ・表面機能</h1>
+        </div>
+
+        <!-- ▼ 縦並び3枚コンテンツエリア ▼ -->
+        <div class="vertical-gallery">
+
+            <!-- 1枚目：製品画像 -->
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <!-- 1枚目のお好きな画像URLまたはパス -->
+                    <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=640x10000:format=jpg/path/s0054f211ee0da790/image/i4c4dffdd7f3b8b67/version/1403257483/image.jpg" alt="MW処理 製品画像">
+                </div>
+                <div class="photo-info">
+                    <span class="photo-number">PHOTO 01</span>
+                    <h2 class="photo-title">MW処理 製品画像・概要</h2>
+                    <p style="margin:0; color:#555; font-size:0.95rem;">MW処理（マイクロウェーブ / 表面改質処理）を施した各種工具・金型部品です。</p>
+                </div>
+            </div>
+
+            <!-- 2枚目：T社、S社、H社の MW処理テスト結果（表テキスト化） -->
+            <div class="photo-card">
+                <div class="photo-info">
+                    <span class="photo-number">DATA 01</span>
+                    <h2 class="photo-title">Ｔ社、Ｓ社、Ｈ社 の Ｍ Ｗ 処 理 テ ス ト 結 果</h2>
+                    
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>刃工具・材質</th>
+                                    <th>熱処理</th>
+                                    <th>加工部品</th>
+                                    <th>工程</th>
+                                    <th>現状加工数</th>
+                                    <th>破損状況</th>
+                                    <th>MW加工数</th>
+                                    <th>倍数</th>
+                                    <th>考査</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td class="text-left">ハイスドリル</td><td>-</td><td>E/Gブロック</td><td>メインホール穴あけ</td><td>300</td><td>ランド摩耗</td><td>600</td><td><strong>2</strong></td><td class="text-left"></td></tr>
+                                <tr><td>2</td><td class="text-left">超硬ドリル</td><td>-</td><td>E/Gブロック</td><td>メインホール穴あけ</td><td>450</td><td>ランド摩耗</td><td>2,138</td><td><strong>4.8</strong></td><td class="text-left">使い過ぎ</td></tr>
+                                <tr><td>3</td><td class="text-left">ハイスドリル</td><td>-</td><td>クランクシャフト</td><td>フロント ネジ下穴あけ</td><td>150</td><td>ランド摩耗</td><td>300</td><td><strong>2</strong></td><td class="text-left">ランド溶着0.8〜3.0 1.8倍が適当</td></tr>
+                                <tr><td>4</td><td class="text-left">超硬バイト</td><td>-</td><td>クランクシャフト</td><td>ピン部溝入れ</td><td>220</td><td>刃カケ</td><td>450</td><td><strong>2</strong></td><td class="text-left">摩耗拡大はあるが2倍でOK</td></tr>
+                                <tr><td>5</td><td class="text-left">ハイスドリル</td><td>-</td><td>コンロッド</td><td>ボルト下穴あけ</td><td>300</td><td>ランド摩耗</td><td>600</td><td><strong>2</strong></td><td class="text-left">現状では1.8倍が適当</td></tr>
+                                <tr><td>6</td><td class="text-left">超硬チップ</td><td>TiN</td><td>コンロッド</td><td>合わせ面削り</td><td>1,500</td><td>刃カケ</td><td>3,040</td><td><strong>2</strong></td><td class="text-left">2900位からバリ高い1.9倍が適当</td></tr>
+                                <tr><td>7</td><td class="text-left">ハイスドリル</td><td>-</td><td>カム</td><td>ノック下穴あけ</td><td>1,000</td><td>ランド摩耗</td><td>2,000</td><td><strong>2</strong></td><td class="text-left"></td></tr>
+                                <tr><td>8</td><td class="text-left">超硬チップ</td><td>TiN</td><td>クランクシャフト</td><td>ターンブローチ削り</td><td>400</td><td>刃カケ</td><td>2,000</td><td><strong>5</strong></td><td class="text-left">5倍 UP OK</td></tr>
+                                <tr><td>9</td><td class="text-left">ハイスドリル</td><td>-</td><td>クランクシャフト</td><td>センター穴あけ</td><td>160</td><td>ランド摩耗</td><td>800</td><td><strong>5</strong></td><td class="text-left">使い過ぎ</td></tr>
+                                <tr><td>10</td><td class="text-left">超硬ドリル</td><td>-</td><td>FC-25</td><td>φ5 下穴あけ</td><td>200〜400</td><td>ランド摩耗</td><td>562〜823</td><td><strong>2.5</strong></td><td class="text-left"></td></tr>
+                                <tr><td>11</td><td class="text-left">超硬ドリル</td><td>-</td><td>FC-25</td><td>φ6 下穴あけ</td><td>200〜500</td><td>ランド摩耗</td><td>572〜612</td><td><strong>2.5</strong></td><td class="text-left"></td></tr>
+                                <tr><td>12</td><td class="text-left">タップ(HSS)</td><td>TiCN</td><td>-</td><td>φ8</td><td>30,000</td><td>摩耗</td><td>65,000</td><td><strong>2.1</strong></td><td class="text-left"></td></tr>
+                                <tr><td>13</td><td class="text-left">タップ(HSS)</td><td>TiN</td><td>-</td><td>φ8</td><td>20,000</td><td>摩耗</td><td>48,000</td><td><strong>2.4</strong></td><td class="text-left">最大56000まで延びた</td></tr>
+                                <tr><td>14</td><td class="text-left">パンチ(SKH-51)</td><td>TiN</td><td>-</td><td>ブラケットナット</td><td>20,000</td><td>摩耗</td><td>31,300</td><td><strong>1.5</strong></td><td class="text-left"></td></tr>
+                                <tr><td>15</td><td class="text-left">パンチ(SKH-51)</td><td>-</td><td>-</td><td>成形パンチ</td><td>20,000</td><td>折損</td><td>141,956</td><td><strong>7</strong></td><td class="text-left"></td></tr>
+                                <tr><td>16</td><td class="text-left">パンチ(SKD-11)</td><td>-</td><td>S-45C</td><td>φ11穴あけ</td><td>1,000</td><td>摩耗</td><td>55,370</td><td><strong>5</strong></td><td class="text-left">刃カケ摩耗は4、756から</td></tr>
+                                <tr><td>17</td><td class="text-left">パンチ(SKD-12)</td><td>TiCN</td><td>-</td><td>ピアスパンチ</td><td>30,000</td><td>刃カケ</td><td>133,000</td><td><strong>4.4</strong></td><td class="text-left"></td></tr>
+                                <tr><td>18</td><td class="text-left">成形パンチ</td><td>PCV-D</td><td>SUS304C</td><td>SUS 口金</td><td>10,000</td><td>摩耗</td><td>26,600</td><td><strong>2.6</strong></td><td class="text-left"></td></tr>
+                                <tr><td>19</td><td class="text-left">パンチ(SKD-11)</td><td>-</td><td>防振金具</td><td>ダボ出しパンチ</td><td>4,000</td><td>刃カケ</td><td>44,000</td><td><strong>11</strong></td><td class="text-left"></td></tr>
+                                <tr><td>20</td><td class="text-left">パンチ(SKD-12)</td><td>-</td><td>SUS302</td><td>クランプ</td><td>2,000</td><td>刃カケ</td><td>18,000</td><td><strong>9</strong></td><td class="text-left"></td></tr>
+                                <tr><td>21</td><td class="text-left">電極</td><td>-</td><td>クロム鋼</td><td>タンクカバー</td><td>3,000</td><td>摩耗</td><td>7,000</td><td><strong>2.3</strong></td><td class="text-left"></td></tr>
+                                <tr><td>22</td><td class="text-left">パンチ(QCM8)</td><td>高温戻し</td><td>SUS430 0.5t</td><td>切り起こし</td><td>88,000</td><td>折損</td><td>340,000</td><td><strong>3.8</strong></td><td class="text-left"></td></tr>
+                                <tr><td>23</td><td class="text-left">パンチ(DC-53)</td><td>高温戻し</td><td>SUS301 0.31t</td><td>スプリングブロック</td><td>30,000</td><td>摩耗</td><td>130,000</td><td><strong>4.3</strong></td><td class="text-left"></td></tr>
+                                <tr><td>24</td><td class="text-left">パンチ(SKH-51)</td><td>-</td><td>SCM(S48C) 5.0t</td><td>ケージ窓抜きパンチ</td><td>3,000</td><td>溶着</td><td>6,000</td><td><strong>2</strong></td><td class="text-left">側面溶着が少なくなった</td></tr>
+                                <tr><td>25</td><td class="text-left">転造ダイス(SKH-51)</td><td>-</td><td>-</td><td>ギア</td><td>13,261</td><td>刃カケ</td><td>91,100</td><td><strong>6.8</strong></td><td class="text-left"></td></tr>
+                                <tr><td>26</td><td class="text-left">ピニオンカッター</td><td>-</td><td>-</td><td>デフケース</td><td>150</td><td>摩耗</td><td>304</td><td><strong>2</strong></td><td class="text-left"></td></tr>
+                                <tr><td>27</td><td class="text-left">丸ブローチ</td><td>-</td><td>-</td><td>-</td><td>2,000</td><td>摩耗</td><td>3,000</td><td><strong>1.5</strong></td><td class="text-left"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3枚目：MW処理で付加される表面機能（表テキスト化） -->
+            <div class="photo-card">
+                <div class="photo-info">
+                    <span class="photo-number">DATA 02</span>
+                    
+                    <div style="margin-top: 10px;">
+                        <div class="function-table-wrap">
+                            <div class="function-table .header-banner" style="background-color: #b32438; color: #fff; font-size: 1.25rem; font-weight: bold; text-align: center; padding: 12px; border-radius: 6px 6px 0 0;">
+                                MW処理で付加される表面機能
+                            </div>
+                            <table class="function-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%;">機能</th>
+                                        <th style="width: 35%;">具体的な効果</th>
+                                        <th style="width: 40%;">適用分野</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center; font-weight: bold;">摺 動 性</td>
+                                        <td>低フリクションで滑る表面</td>
+                                        <td>軸受、シャフト、ピストン、レール、スライダー</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; font-weight: bold;">離 型 性</td>
+                                        <td>型離れを向上</td>
+                                        <td>食品機械、樹脂、ゴム、ダイキャスト各種金型</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; font-weight: bold;">流体制御</td>
+                                        <td>流体の流れを制御</td>
+                                        <td>流路、シリンジ、流体軸受</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; font-weight: bold;">耐 久 性</td>
+                                        <td>表面の強化</td>
+                                        <td>歯車、スプリング、ボルト、金型、医療機器</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; font-weight: bold;">光学特性</td>
+                                        <td>光の反射を制御</td>
+                                        <td>導光板、光学フィルム、防眩パネル</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- ▲ 縦並び3枚エリア ここまで ▲ -->
+
+        <!-- お問い合わせエリア -->
+        <div class="contact-section">
+            <h3 class="contact-title">お気軽にお問い合わせ・ご相談ください</h3>
+            
+            <div class="contact-box">
+                <div class="contact-item">
+                    <span class="contact-label">TEL:</span>
+                    <a href="tel:090-1255-1962">090-1255-1962</a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">FAX:</span>
+                    <span class="contact-val">048-928-8028</span>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">E-MAIL:</span>
+                    <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

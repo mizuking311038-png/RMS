@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>株式会社RMS </title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #f4f7f6;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        h1,
+        p {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* ページ全体のスクロールを滑らかにする */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #cc0000;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #990000;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 項目（カード）のスタイル */
+        .card-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            width: 260px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid #cc0000;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #333333;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            text-align: left;
+            color: #666666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* 画面最上部の赤いライン */
+        /* 【変更】画面最上部の赤いライン */
+        /* ===================================
+   最上部ライン ＆ メガメニュー（画面上半分）
+=================================== */
+
+        /* 1. 赤ラインとメニューを束ねる親要素（一番上に固定） */
+        .top-line-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* 【修正】2. 赤いライン本体 */
+        .top-line {
+            width: 100%;
+            height: 50px;
+            /* ★高さを50pxに統一して隙間をなくす */
+            background-color: #e60012;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        /* 【修正】3. 画面上半分に出てくるドロップダウンメニュー */
+        .top-line-dropdown {
+            position: absolute;
+            top: 100%;
+            /* ★赤ライン(50px)の真下に固定 */
+            left: 0;
+            width: 100%;
+            height: calc(50vh - 50px);
+            /* 画面上半分 */
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-bottom: 3px solid #e60012;
+            box-sizing: border-box;
+
+            opacity: 0;
+            visibility: hidden;
+            /* 透明度（opacity）と表示状態（visibility）だけを滑らかにする */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+        }
+
+        /* ★★★ 【ここがポイント！】がくつきを100%防ぐ見えない橋（ヒットボックス） ★★★ */
+        .top-line-dropdown::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            /* メニューの上側に15px分はみ出させる */
+            left: 0;
+            width: 100%;
+            height: 15px;
+            /* 15pxの「透明な判定エリア」を作る */
+            display: block;
+        }
+
+        /* 4. マウスが乗った時に表示する設定 */
+        .top-line-wrapper:hover .top-line-dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* 5. メニュー内部のリンク（候補）のスタイルを修正 */
+        /* 候補リンク本体 */
+        .dropdown-column a {
+            display: block;
+            color: #333333;
+            text-decoration: none;
+            font-size: 0.88rem;
+
+            /* ★★★ ここが一番重要！外側の隙間をゼロにして密着させます ★★★ */
+            margin: 0;
+
+            /* ★★★ 外側の隙間の代わりに、内側の余白（上下12px、左右16px）を広げます ★★★ */
+            padding: 12px 16px;
+
+            border-radius: 4px;
+            /* 変化をより素早く（0.15秒）してサクサク動くようにします */
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        /* 【修正】リンクにマウスを乗せたときの変化 */
+        .dropdown-column a:hover {
+            color: #e60012;
+            font-weight: bold;
+
+            /* ▼▼ 「候補が動く」を削除し、「周りが光る」を追加 ▼▼ */
+            /* transform: translateX(4px);  <-- これを削除 */
+
+            /* 候補の周りをうっすら赤く光らせる（box-shadow） */
+            box-shadow: 0 0 10px rgba(230, 0, 18, 0.3);
+            /* 影が見えるように背景色も少し明るくする */
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 6. メニュー内部の表示レイアウト（3列並び） */
+        .dropdown-content {
+            max-width: 1000px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            box-sizing: border-box;
+            overflow-y: auto;
+            /* 項目が多い場合にスクロール可能にする */
+        }
+
+        .dropdown-column h3 {
+            font-size: 0.95rem;
+            color: #e60012;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e60012;
+            padding-bottom: 5px;
+        }
+
+        .dropdown-column a {
+            display: block;
+            color: #333333;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+
+
+        /* ▼ 新しく追加（赤いラインの中の文字デザイン） ▼ */
+        .top-line-text {
+            color: #ffffff;
+            /* 赤地に映える白い文字 */
+            font-size: 0.8rem;
+            /* 30pxの帯に収まる小さめサイズ */
+            font-weight: bold;
+            /* 太字 */
+        }
+
+        /* 【変更】赤いラインの中の企業名リンク */
+        .top-line-text {
+            color: #ffffff;
+            /* 白文字 */
+            font-size: 1.5rem;
+            /* サイズ */
+            font-weight: bold;
+            /* 太字 */
+            text-decoration: none;
+            /* 【追加】リンクの下線を消す */
+            cursor: pointer;
+            /* 【追加】カーソルをポインター（指マーク）にする */
+            transition: opacity 0.2s;
+            /* 【追加】ホバー時の変化を滑らかに */
+        }
+
+        /* 【追加】マウスを乗せたときに少しフワッと透明にする演出 */
+        .top-line-text:hover {
+            opacity: 0.8;
+        }
+
+        /* ヘッダー（ロゴ） */
+        .header {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 45px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            text-align: left;
+            font-size: 1.5rem;
+            color: #333333;
+            margin: 0;
+            display: inline-block;
+            position: relative;
+            border-bottom: none;
+        }
+
+        /* メイン画像 */
+        .hero-image {
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* お知らせエリア */
+        .news-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #333333;
+            border-left: 4px solid #e60012;
+            padding-left: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .news-list {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: #333333;
+            border-bottom: 1px solid #eeeeee;
+            transition: background-color 0.2s ease;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: #888888;
+        }
+
+        .news-category {
+            font-size: 0.75rem;
+            background-color: #e60012;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .news-text {
+            font-size: 0.95rem;
+        }
+
+        /* 【上書き】ヘッダーを「ロゴ＝左」「メニュー＝右」の横並びにする */
+        .header {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 45px;
+            margin-bottom: 20px;
+
+            /* 横並びにするための設定 */
+            display: flex;
+            justify-content: space-between;
+            /* ロゴを左端、メニューを右端に配置 */
+            align-items: center;
+            /* 上下の中心を揃える */
+        }
+
+        /* 【ここを追加】ナビゲーションメニューのスタイル */
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+            /* メニュー同士の間のすき間 */
+        }
+
+        .nav-link {
+            text-decoration: none;
+            /* ダサい下線を消す */
+            color: #333333;
+            /* 通常の文字色 */
+            font-size: 0.95rem;
+            font-weight: bold;
+            /* 少し太字にして読みやすく */
+            transition: color 0.2s ease;
+        }
+
+        /* マウスを乗せたときに赤色にふわっと変える */
+        .nav-link:hover {
+            color: #e60012;
+        }
+
+        /* ===================================
+   ドロップダウンメニューのスタイル
+=================================== */
+
+        /* 1. 親要素（メニューの基準位置） */
+        .dropdown {
+            position: relative;
+            /* 子メニューを自分のすぐ下に配置するための基準 */
+            display: inline-block;
+        }
+
+        /* 2. サブメニューの枠（通常時は隠しておく） */
+        .dropdown-menu {
+            display: none;
+            /* 通常は非表示 */
+            position: absolute;
+            /* 親の直下に浮き上がらせて配置 */
+            top: 100%;
+            /* 親メニューの真下に表示 */
+            left: 0;
+            background-color: #ffffff;
+            /* メニューの背景色 */
+            min-width: 180px;
+            /* メニューの幅 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            /* ふんわり浮く影 */
+            border-radius: 8px;
+            padding: 8px 0;
+            z-index: 1000;
+            /* 他の画像などの上に重ねて表示 */
+        }
+
+        /* 3. 親要素（.dropdown）にマウスが乗ったら（:hover）サブメニューを表示 */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* 4. サブメニュー内のリンクボタン */
+        .dropdown-menu a {
+            color: #333333;
+            padding: 10px 18px;
+            text-decoration: none;
+            display: block;
+            /* 縦並びにする */
+            font-size: 0.88rem;
+            font-weight: normal;
+            text-align: left;
+            /* 文字を左寄せ */
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        /* 5. サブメニューの項目にマウスを乗せた時の変化 */
+        .dropdown-menu a:hover {
+            background-color: #f4f7f6;
+            /* 背景をうっすらグレーに */
+            color: #e60012;
+            /* 文字を赤色に */
+        }
+
+        /* スクロール移動した時に、上のバーと被らないよう60px手前で止める */
+        .card-container,
+        .news-section {
+            scroll-margin-top: 60px;
+        }
+
+        /* 【CSS】会社概要エリアと表のデザイン */
+        .about-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+            scroll-margin-top: 60px;
+            /* スクロール移動した時にタイトルが隠れるのを防ぐ */
+        }
+
+        .about-table {
+            width: 100%;
+            border-collapse: collapse;
+            /* 二重線を防ぎ、キレイな1本線にする */
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .about-table th,
+        .about-table td {
+            padding: 16px 20px;
+            /* マスの内側にすき間を作る */
+            text-align: left;
+            /* 左寄せ */
+            border-bottom: 1px solid #eeeeee;
+            /* マスとマスの間にうっすら線を引く */
+            font-size: 0.95rem;
+        }
+
+        .about-table th {
+            width: 25%;
+            /* 項目名の幅 */
+            background-color: #f9f9f9;
+            /* 項目名の背景を薄いグレーにする */
+            color: #333333;
+        }
+
+        /* CSSに追記：リストの余計な余白を消して綺麗に整える */
+        .business-list {
+            margin: 0;
+            padding-left: 20px;
+            /* 左側にポッチのスペースを作る */
+        }
+
+        .business-list li {
+            margin-bottom: 6px;
+            /* 項目ごとのすき間 */
+        }
+
+        /* CSSの .about-table td に line-height を追加 */
+        .about-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 0.95rem;
+
+            line-height: 1.8;
+            /* 【追加】文字の高さの1.8倍の行間を開ける（1.6〜1.8が読みやすい） */
+        }
+
+        /* 【方法2】デフォルトの丸を消して、赤いチェックマークにする */
+        .business-list {
+            list-style: none;
+            /* 【重要】元々の黒丸を消す */
+            padding-left: 0;
+            /* 左側の余白をリセット */
+        }
+
+        .business-list li {
+            position: relative;
+            padding-left: 22px;
+            /* チェックマークが入る左側のスペースを開ける */
+            margin-bottom: 8px;
+            /* 項目同士の縦のすき間 */
+        }
+
+        /* 文字の前にチェックマークを差し込む */
+        .business-list li::before {
+            content: "✓";
+            /* 表示したい記号（「■」や「▶」に変えることも可能） */
+            color: #e60012;
+            /* 赤色 */
+            font-weight: bold;
+            /* 太字 */
+            position: absolute;
+            left: 0;
+            /* 一番左端に配置 */
+            top: 0;
+        }
+
+
+        /* ===================================
+   画面右下の「Page Top」ボタン
+=================================== */
+        .pagetop {
+            position: fixed;
+            /* 画面に対して位置を固定する */
+            bottom: 30px;
+            /* 画面の下から30pxの位置 */
+            right: 30px;
+            /* 画面の右から30pxの位置 */
+            width: 50px;
+            /* ボタンの幅 */
+            height: 50px;
+            /* ボタンの高さ */
+            background-color: #e60012;
+            /* 赤いアクセントカラー */
+            color: #ffffff;
+            /* 文字（矢印）の色 */
+            border-radius: 50%;
+            /* 正方形を「丸」にする設定 */
+
+            /* 矢印（▲）をボタンの真ん中に配置する */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+            /* 下線を消す */
+            font-size: 1.2rem;
+            /* 矢印の大きさ */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* ふんわり浮き上がる影 */
+            z-index: 999;
+            /* 他の要素より手前に表示 */
+
+            /* ▼▼ ここを追加（初期は隠す＆アニメーション設定） ▼▼ */
+            opacity: 0;
+            /* 最初は完全透明にする */
+            visibility: hidden;
+            /* 透明な状態の時にクリックできないように隠す */
+            transition: all 0.3s ease;
+            /* ふわっと表示・非表示する変化の時間 */
+        }
+
+        /* 【追加】JavaScriptでこのクラスがついた時だけ表示する */
+        .pagetop.is-show {
+            opacity: 1;
+            /* 不透明にする */
+            visibility: visible;
+            /* 表示する */
+        }
+
+        .pagetop:hover {
+            background-color: #cc0000;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+
+
+
+        /* マウスを乗せたときの演出 */
+        .pagetop:hover {
+            background-color: #cc0000;
+            /* 少し濃い赤にする */
+            transform: translateY(-5px);
+            /* 少し上に浮き上がる */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+
+        /* これ以降変更禁止 */
+        /* ===================================
+   スマホ・タブレット向け（画面幅768px以下）の調整
+=================================== */
+        @media (max-width: 768px) {
+
+            /* 1. 表（テーブル）を縦並び（カード型）に変化させる */
+            .about-table,
+            .about-table tr,
+            .about-table th,
+            .about-table td {
+                display: block;
+                /* 横並びを解除して縦並び（ブロック）にする */
+                width: 100%;
+                /* 幅をいっぱいに広げる */
+                box-sizing: border-box;
+            }
+
+            .about-table th {
+                width: 100%;
+                background-color: #f0f0f0;
+                /* 項目名の背景を少し濃くして目立たせる */
+                border-bottom: none;
+                /* 項目名の下の線を消す */
+                padding-bottom: 6px;
+            }
+
+            .about-table td {
+                padding-top: 8px;
+                padding-bottom: 20px;
+                /* データの下に余白を作る */
+            }
+
+            .about-table tr {
+                border-bottom: 2px solid #e60012;
+                /* 行ごとの区切りに赤線を引く */
+            }
+
+            .about-table tr:last-child {
+                border-bottom: none;
+            }
+
+            /* 2. 箇条書き（リスト）の文字サイズと余白の微調整 */
+            .business-list li {
+                font-size: 0.9rem;
+                /* スマホ用に文字サイズをほんの少し小さく */
+                line-height: 1.6;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 画面一番上の赤いライン -->
+    <!-- 【変更後】<span> を <a href="#"> に書き換え -->
+    <!-- 【変更後】赤ラインとメガメニューを親要素で囲む -->
+    <div class="top-line-wrapper">
+        <!-- 赤いライン -->
+        <div class="top-line">
+            <a href="#" class="top-line-text">株式会社RMS</a>
+            <span class="top-line-hint"></span>
+        </div>
+
+        <!-- カーソルを合わせると画面上半分に出てくるメニュー -->
+        <div class="top-line-dropdown">
+            <div class="dropdown-content">
+                <div class="dropdown-column">
+                    <h3>取り扱い製品</h3>
+                    <a href="catalog.html">エンドミル</a>
+                    <a href="case-studies.html">転造ダイス</a>
+
+                    <a href="recruit.html">ねじゲージ</a>
+                </div>
+                <div class="dropdown-column">
+                    <h3>資料</h3>
+                    <a href="case-studies.html">転造工具 オーエスジー(株)</a>
+                    <a href="./siryou/similar.html">本物そっくりさん(リユース)</a>
+                    <a href="./siryou/MW.html">MW処理</a>
+                </div>
+                <div class="dropdown-column">
+                    <h3>お取引業者様方</h3>
+                    <a href=""></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ヘッダー（ロゴ） -->
+    <header class="header">
+        <h1 class="logo">株式会社RMS</h1>
+        <!-- 【書き換え】ヘッダーのナビゲーション部分 -->
+        <nav class="nav-menu">
+    <a href="#about" class="nav-link">会社概要</a>
+
+    <div class="dropdown">
+        <a href="service.html" class="nav-link">事業内容 ▾</a>
+        <div class="dropdown-menu">
+            <a href="service-electronics.html">01. 製品販売</a>
+            <a href="./siryou/MW.html">02. 製品加工</a>
+            <a href="./siryou/similar.html">03. 製品リユース</a>
+        </div>
+    </div>
+            <!-- マウスを乗せたら出るサブメニュー -->
+            <div class="dropdown-menu">
+                <a href="#service01">01. 機械製品</a>
+                <a href="#service02">02. 迅速なサポート</a>
+                <a href="#service03">03. 信頼と実績</a>
+            </div>
+            </div>
+
+            <a href="otoiawase.html" class="nav-link">お問い合わせ</a>
+        </nav>
+    </header>
+
+    <!-- メイン画像 -->
+    
+
+    <!-- 公式サイトリンクボタン -->
+    <a href="https://www.rms-net.com/" class="btn">公式WEBサイトはこちら</a>
+
+    <!-- 項目（カード）エリア -->
+    <!-- 変更前: <div class="card-container"> -->
+    <section id="services" class="card-container">
+        <div class="card">
+            <h3>01. 製品販売業</h3>
+            <p>高品質な機械部品・機器を取り扱い、お客様のニーズに合わせた最適なソリューションをご提案します。</p>
+        </div>
+
+        <div class="card">
+            <h3>02. 迅速なサポート</h3>
+            <p>長年の実績と信頼をベースに、お問い合わせから納品までスピーディーに対応いたします。</p>
+        </div>
+
+        <div class="card">
+            <h3>03. 信頼と実績</h3>
+            <p>お客様との繋がりを大切にし、常に変化する技術トレンドに対応した柔軟なサービスを提供します。</p>
+        </div>
+        </div>
+
+        <!-- お知らせエリア -->
+        <!-- 変更前: <section class="news-section"> -->
+        <section id="news" class="news-section">
+            <h2 class="section-title">お知らせ</h2>
+
+            <div class="news-list">
+                <a href="#" class="news-item">
+                    <span class="news-date">2026.08.01</span>
+                    <span class="news-category">お知らせ</span>
+                    <span class="news-text">Webサイトをリニューアルオープンいたしました。</span>
+                </a>
+                <a href="#" class="news-item">
+                    <span class="news-date">2026.07.15</span>
+                    <span class="news-category">製品情報</span>
+                    <span class="news-text">新製品の取り扱いを開始しました。</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 【HTML】会社概要エリア（id="about" でメニューと連動） -->
+        <section id="about" class="about-section">
+            <h2 class="section-title">会社概要</h2>
+
+            <table class="about-table">
+                <tr>
+                    <th>会社名</th>
+                    <td>株式会社RMS (アールエムエス)</td>
+                </tr>
+                <tr>
+                    <th>代表者</th>
+                    <td>鈴木 義久</td>
+                </tr>
+                <tr>
+                    <th>所在地</th>
+                    <td>〒340-0032 埼玉県草加市遊馬町1129-2</td>
+                </tr>
+                <tr>
+                    <th>TELL</th>
+                    <td>090-1255-1962</td>
+                </tr>
+                <tr>
+                    <th>FAX</th>
+                    <td>048-928-8028</td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td>ttk-city@rms-net.com</td>
+                </tr>
+                <tr>
+                    <th>事業内容</th>
+                    <td>
+                        <ul class="business-list">
+
+                            <li>O-RE( レインボー処理 ) HV7000</li>
+                            <li>B-RE( レインボー処理 ) HV3500</li>
+                            <li>B-DLC( DLC処理 ) HV2500</li>
+                            <li>TTKエンドミル輸入元</li>
+                            <li>CITYエンドミル代理店</li>
+                            <li>エンドミル研磨</li>
+                            <li>各種コーティング</li>
+                            <li>MW処理( マイクロウェーブ )</li>
+                            <li>カッター・ホルダーのリユース試作</li>
+                            <li>環境機器・・・浮上油処理装置・スラッジ処理装置</li>
+                            <li>外段取りパレットチェンジャー・治具</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>公式サイト</th>
+                    <td><a href="https://www.rms-net.com/" target="_blank">https://www.rms-net.com/</a></td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 画面右下のページトップへ戻るボタン -->
+        <a href="#" class="pagetop">▲</a>
+
+        <!-- ▼▼ ここからJavaScriptを追加 ▼▼ -->
+        <script>
+            // 1. ボタン要素を取得する
+            const pageTopBtn = document.querySelector('.pagetop');
+
+            // 2. 画面がスクロールされた時の動きを監視する
+            window.addEventListener('scroll', () => {
+                // 200px以上下にスクロールしたら「.is-show」クラスをつける
+                if (window.scrollY > 200) {
+                    pageTopBtn.classList.add('is-show');
+                } else {
+                    // 200px未満（一番上付近）に戻ったら「.is-show」クラスを外す
+                    pageTopBtn.classList.remove('is-show');
+                }
+            });
+        </script>
+</body>
+
+</html>

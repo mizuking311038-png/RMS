@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>限界プレーンゲージ(栓ゲージ) | 株式会社RMS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 80px 20px 40px; /* 上部固定ヘッダー分の余白 */
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* ページ上部の固定赤ヘッダー */
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: #e60012;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* メインコンテンツ枠 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e60012;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* タイトルと右画像エリア */
+        .product-header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+            margin-bottom: 35px;
+            border-bottom: 3px solid #e60012;
+            padding-bottom: 20px;
+        }
+
+        .product-header-title h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+            color: #111;
+        }
+
+        .product-header-title p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .product-header-image {
+            width: 220px;
+            flex-shrink: 0;
+        }
+
+        .product-header-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        /* 中央コンテンツエリア */
+        .product-detail-center {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .product-detail-center h2 {
+            font-size: 1.25rem;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            color: #111;
+        }
+
+        .product-detail-center p {
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        /* 説明（グレー枠ボックス） */
+        .description-section {
+            margin-top: 35px;
+            margin-bottom: 35px;
+            padding: 25px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            text-align: left;
+        }
+
+        .description-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #111;
+            margin-top: 0;
+            margin-bottom: 25px;
+            letter-spacing: 0.1em;
+        }
+
+        .description-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .description-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .description-icon {
+            color: #e60012;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .description-text {
+            flex: 1;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .sub-list {
+            margin-top: 15px;
+            padding-left: 5px;
+        }
+
+        .sub-list-item {
+            margin-bottom: 15px;
+        }
+
+        .sub-list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .sub-list-title {
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        /* 仕様表 */
+        .spec-table {
+            width: 100%;
+            max-width: 550px;
+            margin: 15px auto 0;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .spec-table th, 
+        .spec-table td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            font-size: 0.9rem;
+        }
+
+        .spec-table th {
+            background-color: #f7f8f9;
+            width: 30%;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .spec-table td {
+            color: #555;
+        }
+
+        /* お問い合わせエリア */
+        .contact-section {
+            margin-top: 50px;
+            padding: 25px 20px;
+            background-color: #f7f8f9;
+            border-top: 3px solid #e60012;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 15px 0;
+        }
+
+        .contact-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-label {
+            color: #666;
+            font-size: 0.85rem;
+            margin-right: 5px;
+        }
+
+        .contact-val {
+            color: #e60012;
+        }
+
+        .contact-item a {
+            color: #e60012;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 600px) {
+            .product-header-wrap {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .product-header-image {
+                width: 100%;
+                max-width: 250px;
+                margin-top: 15px;
+            }
+            .contact-box {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 上部固定赤ヘッダー -->
+    <div class="top-line">
+        <a href="../index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <div class="container">
+        <!-- 戻るボタン -->
+        <a href="javascript:history.back();" class="back-link">← 前のページに戻る</a>
+
+        <!-- ▼1. 商品名と画像 ▼ -->
+        <div class="product-header-wrap">
+            <div class="product-header-title">
+                <h1>限界プレーンゲージ(栓ゲージ)</h1>
+                <p>株式会社測範社(SHS)</p>
+            </div>
+            <div class="product-header-image">
+                <!-- ご自身の画像ファイルパスに変更してください -->
+                <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=314x10000:format=jpg/path/s0054f211ee0da790/image/i78d99e7fbddfb354/version/1413181027/image.jpg" alt="限界プレーンゲージ(栓ゲージ)">
+            </div>
+        </div>
+
+        <!-- ▼2. 説明文エリア（中央配置） ▼ -->
+        <div class="product-detail-center">
+
+            <h2>寸法検査対象製品</h2>
+            <p>穴の直径検査</p>
+
+            <!-- ▼ 説明ボックス ▼ -->
+            <div class="description-section">
+                <h3 class="description-title">説明</h3>
+
+                <div class="description-item">
+                    <span class="description-icon">■</span>
+                    <div class="description-text">
+                        <strong>限界プレーンゲージの特徴</strong><br>
+                        限界プレーンゲージは、穴の最大実体寸法を基準とした測定面と最小実体寸法を基準とした測定面をもつゲージです。<br><br>
+                        <strong>限界プレーンゲージの使用目的及び使い方</strong>
+                        
+                        <div class="sub-list">
+                            <div class="sub-list-item">
+                                <div class="sub-list-title">・通り側プラグゲージ</div>
+                                <div>このゲージは、穴の直径が規定された最大実体寸法より大きいかどうかを検査するもので、無理なく穴の全長にわたって通り抜けなければなりません。</div>
+                            </div>
+                            <div class="sub-list-item">
+                                <div class="sub-list-title">・止り側プラグゲージ</div>
+                                <div>このゲージは、穴の直径が規定された最小実体寸法より小さいかどうかを検査するもので、穴にはいってはなりません。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ▼ 基本仕様表 ▼ -->
+            <h2>基本仕様</h2>
+            <table class="spec-table">
+                <tr>
+                    <th>メーカー</th>
+                    <td>株式会社測範社 (SHS)</td>
+                </tr>
+                <tr>
+                    <th>用途</th>
+                    <td>穴の直径寸法検査</td>
+                </tr>
+                <tr>
+                   
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- ▼ 一番下のお問い合わせブロック ▼ -->
+        <div class="contact-section">
+            <h3 class="contact-title">お気軽にお問い合わせ・ご相談ください</h3>
+            
+            <div class="contact-box">
+                <div class="contact-item">
+                    <span class="contact-label">TEL:</span>
+                    <a href="tel:090-1255-1962">090-1255-1962</a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">FAX:</span>
+                    <span class="contact-val">048-928-8028</span>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">E-MAIL:</span>
+                    <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

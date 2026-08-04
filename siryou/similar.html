@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リユースサービス・KAITI製品情報 | 株式会社RMS</title>
+    <style>
+        :root {
+            --primary-color: #e60012;
+            --accent-orange: #f39c12;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --bg-light: #f8f9fa;
+            --border-color: #e9ecef;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 80px 20px 60px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 上部固定ヘッダー */
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* メインコンテナ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* ヒーローキャッチエリア */
+        .hero-banner {
+            background: linear-gradient(135deg, #e60012 0%, #b3000e 100%);
+            color: #ffffff;
+            padding: 30px 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 35px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            margin: 0;
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        /* セクション共通タイトルトップ */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+            color: #111;
+        }
+
+        .section-tag {
+            background-color: var(--accent-orange);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* 1. KAITI製品情報 */
+        .kaiti-image-block {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .kaiti-image-block img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* 2. リユース事例 */
+        .case-section {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+
+        .case-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 3. 取扱い製品 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .product-tag-item {
+            background-color: #f0f4f8;
+            border-left: 4px solid var(--primary-color);
+            padding: 12px 15px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-tag-number {
+            color: var(--primary-color);
+            font-weight: 800;
+            margin-right: 8px;
+        }
+
+        /* 4. 注意事項 */
+        .notice-card {
+            background-color: #fff9f9;
+            border: 1px solid #ffdede;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .notice-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .notice-item {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .notice-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .notice-num {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .price-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: var(--primary-color);
+            color: #ffffff !important;
+            padding: 4px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-left: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .price-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* お問い合わせエリア */
+        .contact-section {
+            padding: 30px 20px;
+            background-color: #f7f8f9;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 18px 0;
+        }
+
+        .contact-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-label {
+            color: #666;
+            font-size: 0.85rem;
+            margin-right: 5px;
+        }
+
+        .contact-val {
+            color: var(--primary-color);
+        }
+
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* レスポンシブ調整 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .hero-title {
+                font-size: 1.35rem;
+            }
+
+            .hero-sub {
+                font-size: 1rem;
+            }
+
+            .contact-box {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 上部固定ヘッダー -->
+    <div class="top-line">
+        <a href="../index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <div class="container">
+        <!-- 戻るボタン -->
+        <a href="javascript:history.back();" class="back-link">← 前のページに戻る</a>
+
+        <!-- ヒーローバナー -->
+        <div class="hero-banner">
+            <span class="hero-badge">RMS-S REUSE SERVICE</span>
+            <h1 class="hero-title">RMS-Sが提供する「リユース」を是非お試しください！</h1>
+            <p class="hero-sub">ダメージを受けた製品が・・・・生まれ変わります！！</p>
+        </div>
+
+        <!-- セクション1: KAITI製品情報 -->
+        <div class="section-header">
+            <span class="section-tag">新規製作・ご相談</span>
+            <h2 class="section-title">KAITI 製品情報</h2>
+        </div>
+
+        <div class="kaiti-image-block">
+            <!-- 送っていただいた1つ目の画像URL -->
+            <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/id89721b93f74fbf6/version/1494813916/image.jpg" alt="KAITI製品情報・特殊超硬ボーリングバー">
+        </div>
+
+        <!-- セクション2: リユース事例 -->
+        <div class="section-header">
+            <span class="section-tag">実績紹介</span>
+            <h2 class="section-title">リユース事例</h2>
+        </div>
+
+        <div class="case-section">
+            <p style="margin-top:0; font-weight:bold; color:#555;">■ 下記リユース事例をご覧ください</p>
+            <!-- 送っていただいた2つ目の画像URL -->
+            <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=650x10000:format=jpg/path/s0054f211ee0da790/image/i6611888622a14d76/version/1402973412/image.jpg" alt="リユース事例 Before / After">
+        </div>
+
+        <!-- セクション3: 取扱い製品 -->
+        <div class="section-header">
+            <h2 class="section-title">取扱い製品</h2>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-tag-item"><span class="product-tag-number">①</span> 超硬ボーリングバイト</div>
+            <div class="product-tag-item"><span class="product-tag-number">②</span> 柄付きカッター</div>
+            <div class="product-tag-item"><span class="product-tag-number">③</span> カッター</div>
+            <div class="product-tag-item"><span class="product-tag-number">④</span> 特殊品（図面要）</div>
+            <div class="product-tag-item"><span class="product-tag-number">⑤</span> ホルダー等々</div>
+        </div>
+
+        <!-- セクション4: 注意事項 -->
+        <div class="section-header">
+            <h2 class="section-title">ご利用上の注意事項</h2>
+        </div>
+
+        <div class="notice-card">
+            <ul class="notice-list">
+                <li class="notice-item">
+                    <span class="notice-num">1</span>
+                    全ての製品において、カタログまたは図面、チップ(各1)、止めネジ(各1)、ロケーター(各1)が必要となります。
+                </li>
+                <li class="notice-item">
+                    <span class="notice-num">2</span>
+                    メーカーを問わず再生可能です。
+                </li>
+                <li class="notice-item">
+                    <span class="notice-num">3</span>
+                    超硬ボーリングバーリユース価格表はこちら
+                    <a href="price-list.html" class="price-btn" target="_blank">価格表を見る →</a>
+                </li>
+                <li class="notice-item">
+                    <span class="notice-num">4</span>
+                    超硬ボーリングバーリユースの納期は30日〜45日いただいております。
+                </li>
+                <li class="notice-item">
+                    <span class="notice-num">5</span>
+                    カッター及び特殊品の場合は、事前にリユース箇所を明記したものをメールでお知らせください。<br>
+                    <small style="color:#666;">（※ダメージ箇所の写真がベストです。上面・側面・対面）</small>
+                </li>
+                <li class="notice-item">
+                    <span class="notice-num">6</span>
+                    ロケーター方式の製品は部品1ヶにつき￥6,000以上金額がかかりますので、特殊カッターでない限りお受けできません。
+                </li>
+                <li class="notice-item">
+                    <span class="notice-num">7</span>
+                    新製作作品も取扱しております。どうぞお気軽にご相談ください。
+                </li>
+            </ul>
+        </div>
+
+        <!-- お問い合わせエリア -->
+        <div class="contact-section">
+            <h3 class="contact-title">お気軽にお問い合わせ・ご相談ください</h3>
+            
+            <div class="contact-box">
+                <div class="contact-item">
+                    <span class="contact-label">TEL:</span>
+                    <a href="tel:090-1255-1962">090-1255-1962</a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">FAX:</span>
+                    <span class="contact-val">048-928-8028</span>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">E-MAIL:</span>
+                    <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

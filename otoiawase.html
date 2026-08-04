@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | 株式会社RMS</title>
+    <style>
+        :root {
+            --primary-color: #e60012;
+            --primary-hover: #cc0010;
+            --accent-orange: #f39c12;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --bg-light: #f8f9fa;
+            --border-color: #d1d5db;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 80px 20px 60px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 上部固定ヘッダー */
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* メインコンテナ */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* セクションヘッダー */
+        .section-header {
+            margin: 10px 0 25px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #111;
+        }
+
+        .section-desc {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin: 0;
+        }
+
+        /* 連絡先ダイレクト案内ボックス */
+        .direct-contact-box {
+            background-color: #fcf8f8;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 35px;
+        }
+
+        .direct-contact-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            font-size: 0.95rem;
+        }
+
+        .contact-grid-item strong {
+            color: #555;
+            display: inline-block;
+            width: 70px;
+        }
+
+        .contact-grid-item a {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .contact-grid-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* フォームレイアウト */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        /* 必須・任意バッジ */
+        .badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .badge-required {
+            background-color: var(--primary-color);
+        }
+
+        .badge-optional {
+            background-color: #6c757d;
+        }
+
+        /* 入力フォーム装飾 */
+        .form-control,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+            background-color: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(230, 0, 18, 0.15);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* 個人情報同意チェック */
+        .privacy-box {
+            background-color: var(--bg-light);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 25px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .check-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .check-label {
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .check-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* 送信ボタン */
+        .submit-btn-wrap {
+            text-align: center;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 14px 45px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(230, 0, 18, 0.3);
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 6px 16px rgba(230, 0, 18, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 16px;
+            }
+
+            .section-title {
+                font-size: 1.35rem;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 上部固定ヘッダー -->
+    <div class="top-line">
+        <a href="index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <div class="container">
+        <!-- 戻るボタン -->
+        <a href="javascript:history.back();" class="back-link">← 前のページに戻る</a>
+
+        <!-- ページタイトル -->
+        <div class="section-header">
+            <h1 class="section-title">お問い合わせ</h1>
+            <p class="section-desc">製品のリユースやMW処理のご相談、お見積もり依頼など、お気軽にお問い合わせください。</p>
+        </div>
+
+        <!-- お急ぎの場合の直通電話・FAX・メール案内 -->
+        <div class="direct-contact-box">
+            <div class="direct-contact-title">
+                ■ お電話・メールでのお問い合わせも受け付けております
+            </div>
+            <div class="contact-grid">
+                <div class="contact-grid-item">
+                    <strong>TEL:</strong> <a href="tel:090-1255-1962">090-1255-1962</a>
+                </div>
+                <div class="contact-grid-item">
+                    <strong>FAX:</strong> <span>048-928-8028</span>
+                </div>
+                <div class="contact-grid-item">
+                    <strong>E-MAIL:</strong> <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- お問い合わせフォーム -->
+        <form action="https://ssgform.com/s/BzNPZywR9h1X" method="POST">
+
+            <!-- 会社名 -->
+            <div class="form-group">
+                <label class="form-label" for="company">
+                    会社名 <span class="badge badge-optional">任意</span>
+                </label>
+                <input type="text" id="company" name="company" class="form-control" placeholder="例）株式会社サンプル">
+            </div>
+
+            <!-- お名前 -->
+            <div class="form-group">
+                <label class="form-label" for="name">
+                    お名前 <span class="badge badge-required">必須</span>
+                </label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="例）山田 太郎" required>
+            </div>
+
+            <!-- メールアドレス -->
+            <div class="form-group">
+                <label class="form-label" for="email">
+                    メールアドレス <span class="badge badge-required">必須</span>
+                </label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="例）example@rms-net.com" required>
+            </div>
+
+            <!-- 電話番号 -->
+            <div class="form-group">
+                <label class="form-label" for="tel">
+                    電話番号 <span class="badge badge-required">必須</span>
+                </label>
+                <input type="tel" id="tel" name="tel" class="form-control" placeholder="例）090-1255-1962" required>
+            </div>
+
+            <!-- お問い合わせ種別 -->
+            <div class="form-group">
+                <label class="form-label" for="category">
+                    お問い合わせ種別 <span class="badge badge-required">必須</span>
+                </label>
+                <select id="category" name="category" class="form-select" required>
+                    <option value="" disabled selected>選択してください</option>
+                    <option value="リユースサービスについて">リユースサービスについて</option>
+                    <option value="MW処理について">MW処理について</option>
+                    <option value="新規製作・お見積もり">新規製作・お見積もり</option>
+                    <option value="その他">その他</option>
+                </select>
+            </div>
+
+            <!-- お問い合わせ内容 -->
+            <div class="form-group">
+                <label class="form-label" for="message">
+                    お問い合わせ内容 <span class="badge badge-required">必須</span>
+                </label>
+                <textarea id="message" name="message" class="form-textarea" placeholder="ご相談内容や対象の工具・部品の詳細などを具体的にご記入ください。" required></textarea>
+            </div>
+
+            <!-- 同意チェック -->
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" required>
+                    入力内容を確認し、送信に同意します
+                </label>
+            </div>
+
+            <!-- 送信ボタン -->
+            <div class="submit-btn-wrap">
+                <button type="submit" class="submit-btn">送信する</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>電子部品事業 | 株式会社RMS</title>
+    <!-- index.htmlと同じCSSスタイルをそのまま使用 -->
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #f4f7f6;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* 画面最上部の赤いライン */
+        .top-line {
+            width: 100%;
+            height: 30px;
+            background-color: #e60012;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* ヘッダー */
+        .header {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 45px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            color: #333333;
+            margin: 0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333333;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            color: #e60012;
+        }
+
+        /* 詳細ページのメインコンテンツエリア */
+        .page-container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #333333;
+            border-bottom: 3px solid #e60012;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            color: #e60012;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- 画面一番上の赤いライン -->
+    <div class="top-line"></div>
+
+    <!-- ヘッダー（ロゴをクリックしたらトップページ index.html に戻る） -->
+    <header class="header">
+        <a href="index.html" class="logo">株式会社RMS</a>
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-link">トップへ戻る</a>
+        </nav>
+    </header>
+
+    <!-- 機械部品事業の詳細コンテンツ -->
+    <main class="page-container">
+        <h1 class="page-title">01. 機械部品事業</h1>
+        <p>株式会社RMSでは、最新テクノロジーに対応した高品質な機械部品・機器を取り扱っております。</p>
+        <p>お客様の開発課題やコスト要件に合わせた最適なソリューションを、専門の技術スタッフが提案いたします。</p>
+        
+        <!-- トップページに戻るボタン -->
+        <a href="index.html" class="back-btn">← トップページへ戻る</a>
+    </main>
+</body>
+</html>

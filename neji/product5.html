@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管用平行ねじ(G・PF) | 株式会社RMS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 80px 20px 40px; /* 上部固定ヘッダー分の余白 */
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* ページ上部の固定赤ヘッダー */
+        .top-line {
+            width: 100%;
+            height: 50px;
+            background-color: #e60012;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .top-line-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* メインコンテンツ枠 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e60012;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* タイトルと右画像エリア */
+        .product-header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+            margin-bottom: 35px;
+            border-bottom: 3px solid #e60012;
+            padding-bottom: 20px;
+        }
+
+        .product-header-title h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+            color: #111;
+        }
+
+        .product-header-title p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .product-header-image {
+            width: 220px;
+            flex-shrink: 0;
+        }
+
+        .product-header-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        /* 中央コンテンツエリア */
+        .product-detail-center {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .product-detail-center h2 {
+            font-size: 1.25rem;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            color: #111;
+        }
+
+        .product-detail-center p {
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        /* 説明（グレー枠ボックス） */
+        .description-section {
+            margin-top: 35px;
+            margin-bottom: 35px;
+            padding: 25px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            text-align: left;
+        }
+
+        .description-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #111;
+            margin-top: 0;
+            margin-bottom: 25px;
+            letter-spacing: 0.1em;
+        }
+
+        .description-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .description-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .description-icon {
+            color: #e60012;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .description-text {
+            flex: 1;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        /* リストの補足インデント */
+        .sub-list {
+            margin-top: 8px;
+            padding-left: 15px;
+        }
+
+        .sub-list div {
+            margin-bottom: 4px;
+            color: #555;
+        }
+
+        /* 仕様表 */
+        .spec-table {
+            width: 100%;
+            max-width: 550px;
+            margin: 15px auto 0;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .spec-table th, 
+        .spec-table td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            font-size: 0.9rem;
+        }
+
+        .spec-table th {
+            background-color: #f7f8f9;
+            width: 30%;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .spec-table td {
+            color: #555;
+        }
+
+        /* お問い合わせエリア */
+        .contact-section {
+            margin-top: 50px;
+            padding: 25px 20px;
+            background-color: #f7f8f9;
+            border-top: 3px solid #e60012;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 15px 0;
+        }
+
+        .contact-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-label {
+            color: #666;
+            font-size: 0.85rem;
+            margin-right: 5px;
+        }
+
+        .contact-val {
+            color: #e60012;
+        }
+
+        .contact-item a {
+            color: #e60012;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 600px) {
+            .product-header-wrap {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .product-header-image {
+                width: 100%;
+                max-width: 250px;
+                margin-top: 15px;
+            }
+            .contact-box {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 上部固定赤ヘッダー -->
+    <div class="top-line">
+       <a href="../index.html" class="top-line-text">株式会社RMS</a>
+    </div>
+
+    <div class="container">
+        <!-- 戻るボタン -->
+        <a href="../index.html" class="back-link">← トップページに戻る</a>
+
+        <!-- ▼1. 商品名と画像（1枚目の形式） ▼ -->
+        <div class="product-header-wrap">
+            <div class="product-header-title">
+                <h1>管用平行ねじ(G・PF)</h1>
+                <p>株式会社測範社(SHS)</p>
+            </div>
+            <div class="product-header-image">
+                <!-- 画像URLをご自身の画像に合わせて差し替えてください -->
+                <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=470x1024:format=jpg/path/s0054f211ee0da790/image/i8ede75122fe75325/version/1413529010/image.jpg" alt="管用平行ねじ(G・PF)">
+            </div>
+        </div>
+
+        <!-- ▼2. 説明文エリア（中央配置） ▼ -->
+        <div class="product-detail-center">
+
+            <h2>寸法検査対象製品</h2>
+            <p>
+                ISO等級 管用並行ねじ<br>
+                耐密性を必要としない機械的結合を主目的とするねじ（G・PF）
+            </p>
+
+            <!-- ▼ 説明ボックス ▼ -->
+            <div class="description-section">
+                <h3 class="description-title">説明</h3>
+
+                <!-- G方式 -->
+                <div class="description-item">
+                    <span class="description-icon">■</span>
+                    <div class="description-text">
+                        <strong>管用平行限界ねじゲージ (G)【ISO方式】の特徴</strong><br>
+                        ISOゲージ規格の導入により新しくJISに制定されたもので、耐密性を必要としない機械的結合を主目的とするねじ (G) の検査に使用します。従来のPFとの主な相違点は以下の通りです。
+                        
+                        <div class="sub-list">
+                            <div><strong>(1) 等級の有無：</strong>めねじ用は等級なし。おねじ用はA級・B級の区別あり（GRは共用）。</div>
+                            <div><strong>(2) 検工の区別：</strong>通り側・止り側ともに検工の区別がなくなりました。</div>
+                            <div><strong>(3) リングゲージ合否判定：</strong>通り・止りの点検プラグ(GRGF, GRNF, NRGF, NRNF)により点検。</div>
+                            <div><strong>(4) 摩耗点検プラグ：</strong>NR用摩耗点検プラグ (NW) が新しく導入されました。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PF方式 -->
+                <div class="description-item">
+                    <span class="description-icon">■</span>
+                    <div class="description-text">
+                        <strong>管用平行限界ねじゲージ (PF)【従来JIS方式】の特徴</strong><br>
+                        管、管用部品、流体機器等の接続に用いる耐密性を必要としない機械的結合を主目的としたねじ (PF) の検査に使用します。<br>
+                        検査されるねじの等級に応じてA級・B級の2等級がありますが、通りねじゲージは共通寸法となっています。止りねじゲージには検査用・工作用があります。
+                    </div>
+                </div>
+            </div>
+
+            <!-- ▼ 基本仕様表 ▼ -->
+            <h2>基本仕様</h2>
+            <table class="spec-table">
+                <tr>
+                    <th>メーカー</th>
+                    <td>株式会社測範社 (SHS)</td>
+                </tr>
+                <tr>
+                    <th>対応規格</th>
+                    <td>ISO方式 (G) / JIS方式 (PF)</td>
+                </tr>
+                <tr>
+                    
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- ▼ 一番下のお問い合わせブロック ▼ -->
+        <div class="contact-section">
+            <h3 class="contact-title">お気軽にお問い合わせ・ご相談ください</h3>
+            
+            <div class="contact-box">
+                <div class="contact-item">
+                    <span class="contact-label">TEL:</span>
+                    <a href="tel:090-1255-1962">090-1255-1962</a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">FAX:</span>
+                    <span class="contact-val">048-928-8028</span>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">E-MAIL:</span>
+                    <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
