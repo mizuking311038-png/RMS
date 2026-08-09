@@ -46,6 +46,47 @@
   <p>ローカルの欠損リンク（現在は 0 件）</p>
   <pre id="relative-sample">No relative-missing issues detected.</pre>
 
+  <h2>未解決チェックリスト</h2>
+  <div id="unresolved" class="card">
+    <p class="meta">自動検出された未解決の問題（開発者が対応すべき項目）</p>
+    <ul id="unresolved-list"><li>読み込み中…</li></ul>
+  </div>
+
+  <script>
+    async function loadUnresolved() {
+      const files = [
+        {path:'./relativeMissing.json', name:'Relative missing'},
+        {path:'./anchorMissing.json', name:'Missing anchors'},
+        {path:'./imgMissingAlt.json', name:'Images missing alt'},
+      ];
+      const listEl = document.getElementById('unresolved-list');
+      listEl.innerHTML = '';
+      for (const f of files) {
+        try {
+          const res = await fetch(f.path);
+          if (!res.ok) { listEl.innerHTML += `<li>${f.name}: failed to load (${res.status})</li>`; continue; }
+          const data = await res.json();
+          if (!data || data.length===0) { listEl.innerHTML += `<li>${f.name}: 0</li>`; continue; }
+          listEl.innerHTML += `<li><strong>${f.name}: ${data.length}</strong><pre>${JSON.stringify(data.slice(0,20),null,2)}</pre></li>`;
+        } catch(err) {
+          listEl.innerHTML += `<li>${f.name}: failed to load (${err.message})</li>`;
+        }
+      }
+      // externalResults non-200
+      try {
+        const r = await fetch('./externalResults.json');
+        if (r.ok) {
+          const er = await r.json();
+          const bad = er.filter(x=>x.status && x.status.toString()!=='200');
+          listEl.innerHTML += `<li><strong>External non-200: ${bad.length}</strong><pre>${JSON.stringify(bad.slice(0,20),null,2)}</pre></li>`;
+        } else {
+          listEl.innerHTML += `<li>External results: failed to load (${r.status})</li>`;
+        }
+      } catch(e) { listEl.innerHTML += `<li>External results: failed to load (${e.message})</li>`; }
+    }
+    document.addEventListener('DOMContentLoaded', loadUnresolved);
+  </script>
+
   <script>
     // Try to fetch the JSON files relative to this report file. If the report is opened from file://, fetch may fail due to CORS/file restrictions in some browsers; in that case users can open the JSON files directly.
     async function loadJSON(path, elId, fallbackText){
