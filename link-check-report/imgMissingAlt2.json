@@ -1,0 +1,14 @@
+﻿[
+    {
+        "tag":  "\u003cimg\u0027) {\r\n    $imgBlocks = ($text -split \u0027\u003cimg\u0027) | Where-Object { $_ -ne \u0027\u0027 }\r\n    foreach ($b in $imgBlocks) { $tag = \u0027\u003cimg\u0027 + ($b.Split(\u0027\u003e",
+        "file":  "C:\\Users\\Mizuk\\OneDrive\\デスクトップ\\RMS.worktrees\\next-steps-suggestions\\link-check-report\\scripts\\run_checks.ps1.html"
+    },
+    {
+        "tag":  "\u003cimg\u0027) { $imgBlocks = ($text -split \u0027\u003cimg\u0027) | Where-Object { $_ -ne \u0027\u0027 }; foreach ($b in $imgBlocks) { $tag = \u0027\u003cimg\u0027 + ($b.Split(\u0027\u003e",
+        "file":  "C:\\Users\\Mizuk\\OneDrive\\デスクトップ\\RMS.worktrees\\next-steps-suggestions\\link-check-report\\scripts\\run_checks2.ps1.html"
+    },
+    {
+        "tag":  "\u003cimg\u0027) { $imgBlocks = ($text -split \u0027\u003cimg\u0027) | Where-Object { $_ -ne \u0027\u0027 }; foreach ($b in $imgBlocks) { $tag = \u0027\u003cimg\u0027 + ($b.Split(\u0027\u003e",
+        "file":  "C:\\Users\\Mizuk\\OneDrive\\デスクトップ\\RMS.worktrees\\next-steps-suggestions\\link-check-report\\scripts\\run_checks3.ps1.html"
+    }
+]
