@@ -1,7 +1,7 @@
 # Link checks ignoring mailto:, tel:, javascript: schemes and fragments
 $root = Get-Location
 Write-Output "Root: $root"
-$htmlFiles = Get-ChildItem -Recurse -File -Include *.html,*.htm
+$htmlFiles = Get-ChildItem -Recurse -File -Include *.html,*.htm | Where-Object { $_.FullName -notmatch '\\link-check-report\\' -and $_.FullName -notmatch '\\.github\\' }
 $external = @(); $relativeMissing = @(); $anchorMissing = @(); $imgMissingAlt = @(); $emptyHref = @(); $h1Missing = @();
 foreach ($f in $htmlFiles) {
   $text = Get-Content $f.FullName -Raw -ErrorAction SilentlyContinue
@@ -84,6 +84,8 @@ if ($externalResults.Count -gt 0) { Write-Output "\n-- External link status samp
 # Save report
 $reportDir = Join-Path $root 'link-check-report'
 if (-not (Test-Path $reportDir)) { New-Item -ItemType Directory -Path $reportDir | Out-Null }
-$relativeMissing | ConvertTo-Json -Depth 5 | Out-File (Join-Path $reportDir 'relativeMissing_ignoremailto.json')
-$externalResults | ConvertTo-Json -Depth 5 | Out-File (Join-Path $reportDir 'externalResults_ignoremailto.json')
+$relativeMissing | ConvertTo-Json -Depth 5 | Out-File (Join-Path $reportDir 'relativeMissing.json') -Encoding utf8
+$anchorMissing | ConvertTo-Json -Depth 5 | Out-File (Join-Path $reportDir 'anchorMissing.json') -Encoding utf8
+$imgMissingAlt | ConvertTo-Json -Depth 5 | Out-File (Join-Path $reportDir 'imgMissingAlt.json') -Encoding utf8
+$externalResults | ConvertTo-Json -Depth 5 | Out-File (Join-Path $reportDir 'externalResults.json') -Encoding utf8
 Write-Output "Full JSON reports written to: $reportDir"
