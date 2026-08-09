@@ -1,0 +1,32 @@
+name: Link Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  link-check:
+    name: Run link checks and upload report
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run run_checks3.ps1
+        shell: pwsh
+        run: |
+          Write-Host "Running run_checks3.ps1..."
+          pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./run_checks3.ps1
+
+      - name: List report files
+        shell: pwsh
+        run: |
+          if (Test-Path link-check-report) { Get-ChildItem -Recurse link-check-report | ForEach-Object { Write-Host $_.FullName } } else { Write-Host 'No link-check-report found' }
+
+      - name: Upload link-check-report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-check-report
+          path: link-check-report/**
