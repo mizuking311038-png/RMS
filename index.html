@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="株式会社RMSは切削工具・電動工具の調達から加工・再利用まで一気通貫で支援します。エンドミルやねじゲージなどの工具を迅速に提供し、生産現場をサポートします。">
     <title>株式会社RMS </title>
     <style>
         body {
@@ -284,6 +285,93 @@
             height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 30px 20px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .hero-copy {
+            flex: 1 1 380px;
+            min-width: 280px;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            margin: 0 0 18px;
+            line-height: 1.05;
+            color: #1d1d1d;
+        }
+
+        .hero-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #4d4d4d;
+            margin: 0 0 24px;
+            max-width: 640px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ffffff;
+            color: #cc0000;
+            border: 2px solid #cc0000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cc0000;
+            color: #ffffff;
+        }
+
+        .nav-link.nav-cta {
+            background-color: #cc0000;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .section-intro {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .section-intro .card-container {
+            justify-content: center;
+        }
+
+        .section-intro .card {
+            min-width: 240px;
+            max-width: 320px;
+        }
+
+        .nav-link.nav-cta:hover {
+            background-color: #990000;
+            color: #ffffff;
         }
 
         /* お知らせエリア */
@@ -668,75 +756,51 @@
 </head>
 
 <body>
-    <!-- 画面一番上の赤いライン -->
-    <!-- 【変更後】<span> を <a href="#"> に書き換え -->
-    <!-- 【変更後】赤ラインとメガメニューを親要素で囲む -->
-    <div class="top-line-wrapper">
-        <!-- 赤いライン -->
-        <div class="top-line">
-            <a href="#" class="top-line-text">株式会社RMS</a>
-            <span class="top-line-hint"></span>
-        </div>
-
-        <!-- カーソルを合わせると画面上半分に出てくるメニュー -->
-        <div class="top-line-dropdown">
-            <div class="dropdown-content">
-                <div class="dropdown-column">
-                    <h3>取り扱い製品</h3>
-                    <a href="catalog.html">エンドミル</a>
-                    <a href="case-studies.html">転造ダイス</a>
-
-                    <a href="recruit.html">ねじゲージ</a>
-                </div>
-                <div class="dropdown-column">
-                    <h3>資料</h3>
-                    <a href="case-studies.html">転造工具 オーエスジー(株)</a>
-                    <a href="./siryou/similar.html">本物そっくりさん(リユース)</a>
-                    <a href="./siryou/MW.html">MW処理</a>
-                </div>
-                <div class="dropdown-column">
-                    <h3>お取引業者様方</h3>
-                    <a href="#">業者A（準備中）</a>
-                    <a href="#">業者B（準備中）</a>
-                    <a href="#">業者C（準備中）</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- ヘッダー（ロゴ） -->
     <header class="header">
         <h1 class="logo">株式会社RMS</h1>
-        <!-- 【書き換え】ヘッダーのナビゲーション部分 -->
         <nav class="nav-menu">
-    <a href="#about" class="nav-link">会社概要</a>
-
-    <div class="dropdown">
-        <a href="service.html" class="nav-link">事業内容 ▾</a>
-        <div class="dropdown-menu">
-            <a href="service-electronics.html">01. 製品販売</a>
-            <a href="./siryou/MW.html">02. 製品加工</a>
-            <a href="./siryou/similar.html">03. 製品リユース</a>
-        </div>
-    </div>
-            <!-- マウスを乗せたら出るサブメニュー -->
-            <div class="dropdown-menu">
-                <a href="#service01">01. 機械製品</a>
-                <a href="#service02">02. 迅速なサポート</a>
-                <a href="#service03">03. 信頼と実績</a>
-            </div>
-            </div>
-
-            <a href="otoiawase.html" class="nav-link">お問い合わせ</a>
+            <a href="catalog.html" class="nav-link">製品一覧</a>
+            <a href="service.html" class="nav-link">サービス</a>
+            <a href="case-studies.html" class="nav-link">事例</a>
+            <a href="otoiawase.html" class="nav-link nav-cta">お問い合わせ</a>
         </nav>
     </header>
 
-    <!-- メイン画像 -->
-    <div class="hero-image">
-        <img src="images/Gemini_Generated_Image_mlnd8amlnd8amlnd.png" alt="メインビジュアル" loading="lazy" decoding="async">
-    </div>
+    <section class="hero">
+        <div class="hero-copy">
+            <h2 class="hero-title">切削工具・電動工具を、仕入れから加工・再利用までワンストップで支援</h2>
+            <p class="hero-text">RMSは、エンドミルやねじゲージなどの切削工具・電動工具をまとめて調達し、加工やリユースまで一貫して対応します。スピードと品質を両立し、御社の生産現場を安定化させます。</p>
+            <div class="hero-buttons">
+                <a href="otoiawase.html" class="btn">お問い合わせ</a>
+                <a href="catalog.html" class="btn-secondary">製品一覧を見る</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="images/Gemini_Generated_Image_mlnd8amlnd8amlnd.png" alt="切削工具の写真" loading="lazy" decoding="async">
+        </div>
+    </section>
+
+    <section class="section-intro">
+        <h2 class="section-title">RMSが選ばれる理由</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>迅速な調達</h3>
+                <p>必要な工具を最短でお届けし、納期の遅れによる現場停止を防ぎます。</p>
+            </div>
+            <div class="card">
+                <h3>加工・再利用対応</h3>
+                <p>製品の加工・改善だけでなく、再利用・リユースも含めた提案が可能です。</p>
+            </div>
+            <div class="card">
+                <h3>一貫サポート</h3>
+                <p>仕入れから納品まで、工具に関する相談をまとめて受け付けます。</p>
+            </div>
+        </div>
+    </section>
 
     <!-- 公式サイトリンクボタン -->
-    <a href="https://www.rms-net.com/" class="btn">公式WEBサイトはこちら</a>
+    <a href="https://www.rms-net.com/" class="btn" target="_blank" rel="noopener noreferrer">公式WEBサイトはこちら</a>
 
     <!-- 項目（カード）エリア -->
     <!-- 変更前: <div class="card-container"> -->
@@ -755,7 +819,7 @@
             <h3>03. 信頼と実績</h3>
             <p>お客様との繋がりを大切にし、常に変化する技術トレンドに対応した柔軟なサービスを提供します。</p>
         </div>
-        </div>
+    </section>
 
         <!-- お知らせエリア -->
         <!-- 変更前: <section class="news-section"> -->
