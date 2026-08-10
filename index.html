@@ -752,6 +752,61 @@
                 line-height: 1.6;
             }
         }
+
+        @media (max-width: 1024px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .hero {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px 16px;
+            }
+
+            .hero-copy,
+            .hero-image {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+
+            .hero-image {
+                order: 2;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-buttons .btn,
+            .hero-buttons .btn-secondary {
+                width: 100%;
+            }
+
+            .btn,
+            .btn-secondary {
+                text-align: center;
+            }
+
+            .section-intro .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 420px;
+            }
+        }
     </style>
 </head>
 
