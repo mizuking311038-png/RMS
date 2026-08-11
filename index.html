@@ -188,7 +188,10 @@
 
         .btn {
             display: inline-block;
-            padding: 12px 80px;
+            width: 90%;
+            max-width: 360px;
+            padding: 14px 0;
+            text-align: center;
             background-color: #cc0000;
             color: #ffffff;
             text-decoration: none;
@@ -203,10 +206,6 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
-
-
-    
-
 
         /* ===================================
            コンテンツカードエリア
@@ -424,6 +423,8 @@
                 top: 60px;
                 left: 0;
                 width: 100%;
+                max-height: calc(100vh - 60px); /* 画面からはみ出ないようスクロールを許可 */
+                overflow-y: auto;
                 background-color: #ffffff;
                 flex-direction: column;
                 align-items: flex-start;
@@ -449,21 +450,26 @@
                 margin-top: 10px;
             }
 
-            /* スマホ用ドロップダウン調整 */
+            /* スマホ用ドロップダウン調整（1の改善案：タップ時の誤動作を防ぐ常時展開スタイル） */
             .dropdown {
                 width: 100%;
             }
 
             .dropdown-menu {
+                display: block; /* スマホでは最初から下階層としてインライン表示 */
                 position: static;
                 box-shadow: none;
                 background-color: #f9f9f9;
                 margin-top: 5px;
-                padding-left: 15px;
+                margin-bottom: 10px;
+                padding: 5px 0 5px 15px;
+                border-left: 3px solid #e60012; /* 左側に赤いラインを入れて親項目との違いを可視化 */
+                border-radius: 0 4px 4px 0;
             }
 
-            .dropdown:hover .dropdown-menu {
-                display: block;
+            .dropdown-menu a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
             }
 
             /* テーブルのカード型変化 */
@@ -513,7 +519,7 @@
                 <a href="#about" class="nav-link">会社概要</a>
 
                 <div class="dropdown">
-                    <a href="service.html" class="nav-link">事業内容 ▾</a>
+                    <a href="#service" class="nav-link">事業内容</a>
                     <div class="dropdown-menu">
                         <a href="service-electronics.html">01. 製品販売</a>
                         <a href="./siryou/MW.html">02. 製品加工</a>
@@ -522,7 +528,7 @@
                 </div>
 
                 <div class="dropdown">
-                    <a href="catalog.html" class="nav-link">取扱製品 ▾</a>
+                    <a href="catalog2.html" class="nav-link">取扱製品</a>
                     <div class="dropdown-menu">
                         <a href="catalog.html">エンドミル</a>
                         <a href="case-studies.html">転造ダイス</a>
@@ -540,9 +546,8 @@
         <img src="main-image.png" alt="株式会社RMS メイン画像">
     </div>
 
-    
     <!-- 取扱製品一覧ボタン -->
- <a href="catalog2.html" class="btn">取扱製品一覧</a>
+    <a href="catalog2.html" class="btn">取扱製品一覧</a>
 
     <!-- サービスカードエリア -->
     <section id="services" class="card-container">
@@ -593,11 +598,11 @@
             </tr>
             <tr>
                 <th>所在地</th>
-                <td>〒340-0032 埼玉県草加市遊馬町1129-2</td>
+                <td>〒340-0032 埼玉県草加市遊馬町1129-2<br>
+                <a href="https://maps.google.com/?q=埼玉県草加市遊馬町1129-2" target="_blank" rel="noopener" style="font-size:0.85rem; color:#e60012;">[ Google Mapで見る ]</a></td>
             </tr>
             <tr>
                 <th>TEL</th>
-                <!-- スマホで直接電話がかけられるよう修正 -->
                 <td><a href="tel:09012551962" class="tel-link">090-1255-1962</a></td>
             </tr>
             <tr>
@@ -606,7 +611,7 @@
             </tr>
             <tr>
                 <th>E-mail</th>
-                <td>ttk-city@rms-net.com</td>
+                <td><a href="mailto:ttk-city@rms-net.com" class="tel-link">ttk-city@rms-net.com</a></td>
             </tr>
             <tr>
                 <th>事業内容</th>
@@ -636,19 +641,31 @@
     <!-- Page Top ボタン -->
     <a href="#" class="pagetop" id="js-pagetop">▲</a>
 
+    <!-- フッター -->
+    <footer style="width:100%; background:#333; color:#fff; text-align:center; padding:20px 0; margin-top:60px; font-size:0.85rem;">
+        <p>&copy; 2026 株式会社RMS All Rights Reserved.</p>
+    </footer>
+
     <!-- JavaScript -->
     <script>
         // 1. ハンバーガーメニュー開閉制御
         const hamburger = document.getElementById('js-hamburger');
         const navMenu = document.getElementById('js-nav-menu');
 
+
+        
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+    const isOpen = hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+        ;
+
+// aria-expanded の更新
+    hamburger.setAttribute('aria-expanded', isOpen);
+    hamburger.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く'); 
         });
 
-        // リンククリック時にメニューを閉じる (スマホ用)
-        document.querySelectorAll('.nav-link').forEach(link => {
+        // リンククリック時にメニューを閉じる (親メニュー・サブメニュー双方に対応)
+        document.querySelectorAll('.nav-link, .dropdown-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
@@ -665,6 +682,11 @@
             }
         });
     </script>
+
+<a href="#" class="pagetop" id="js-pagetop" aria-label="ページ上部へ戻る">▲</a>
+
+    <button class="hamburger" id="js-hamburger" aria-label="メニューを開く" aria-expanded="false"></button>
+
 </body>
 
 </html>
