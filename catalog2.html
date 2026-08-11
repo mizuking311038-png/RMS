@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="株式会社RMSの各種製品・技術資料カタログポータル。ご希望のカタログ・資料を選択して詳細をご覧いただけます。">
+    <title>製品・技術カタログ一覧 | 株式会社RMS</title>
+    <!-- Google Fonts: Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #e60012;
+            --primary-red-hover: #cc0000;
+            --red-gradient: linear-gradient(135deg, #e60012 0%, #b3000e 100%);
+            --accent-light-red: #fff5f5;
+            --text-dark: #333333;
+            --text-sub: #666666;
+            --bg-light: #f4f7f6;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --container-width: 950px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        /* 上部固定ヘッダー */
+        header {
+            width: 100%;
+            height: 50px;
+            background-color: var(--primary-red);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-logo {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* メインコンテナ */
+        .container {
+            max-width: var(--container-width);
+            margin: 90px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* ヒーローエリア */
+        .hero-banner {
+            background: var(--red-gradient);
+            color: #ffffff;
+            padding: 35px 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 35px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-banner h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner p {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* カタログカードグリッド */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .catalog-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .catalog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-red);
+        }
+
+        .card-tag {
+            background-color: var(--accent-light-red);
+            color: var(--primary-red);
+            padding: 6px 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-red);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            gap: 6px;
+        }
+
+        .card-btn:hover {
+            background-color: var(--primary-red-hover);
+        }
+
+        /* お問い合わせエリア */
+        .contact-section {
+            padding: 30px 20px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary-red);
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .contact-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .contact-label {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            margin-right: 4px;
+        }
+
+        .contact-item a {
+            color: var(--primary-red);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* トップに戻るボタン */
+        .pagetop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary-red);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .pagetop.is-show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pagetop:hover {
+            background-color: var(--primary-red-hover);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .contact-box {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 固定ヘッダー -->
+    <header>
+        <a href="index.html" class="header-logo">株式会社RMS</a>
+    </header>
+
+    <main class="container">
+
+        <!-- ヒーローバナー -->
+        <div class="hero-banner">
+            <h1>製品・技術カタログ一覧</h1>
+            <p>ご覧になりたい製品カテゴリー・技術資料を選択してください</p>
+        </div>
+
+        <!-- カタログ選択カード一覧 -->
+        <div class="catalog-grid">
+
+            <!-- カード 1: エンドミル -->
+            <div class="catalog-card">
+                <div class="card-tag">切削工具</div>
+                <div class="card-body">
+                    <h2 class="card-title">エンドミル (Endmill) TTK</h2>
+                    <p class="card-desc">高精度・高品質なTTK超硬エンドミルシリーズ。製品情報および解説動画（YouTube）をご案内いたします。</p>
+                    <a href="catalog.html" class="card-btn">資料を見る →</a>
+                </div>
+            </div>
+
+            <!-- カード 2: ねじゲージ -->
+            <div class="catalog-card">
+                <div class="card-tag">測定工具・ゲージ</div>
+                <div class="card-body">
+                    <h2 class="card-title">ねじゲージ（株式会社測範社）</h2>
+                    <p class="card-desc">限界ねじゲージ（ISO/従来JIS）、ユニファイ、管用ねじゲージ、各種マスターリングゲージ等の信頼の測定工具一覧。</p>
+                    <a href="recruit.html" class="card-btn">資料を見る →</a>
+                </div>
+            </div>
+
+            <!-- カード 3: 転造ダイス -->
+            <div class="catalog-card">
+                <div class="card-tag">転造工具</div>
+                <div class="card-body">
+                    <h2 class="card-title">転造ダイス</h2>
+                    <p class="card-desc">ラック形、ロータリー式、丸ダイス、セレーション、平ダイス、タッピン用平ダイスなど各種高精度転造ダイス製品。</p>
+                    <a href="case-studies.html" class="card-btn">資料を見る →</a>
+                </div>
+            </div>
+
+            <!-- カード 4: リユース・KAITI -->
+            <div class="card-tag">再生・開発支援</div>
+            <div class="catalog-card">
+                <div class="card-body">
+                    <h2 class="card-title">リユースサービス & KAITI</h2>
+                    <p class="card-desc">ダメージを受けた工具・バイト・カッターを新品同様に再生成。KAITI超硬ボーリングバー等の製品・注意事項のご案内。</p>
+                    <a href="siryou/similar.html" class="card-btn">資料を見る →</a>
+                </div>
+            </div>
+
+            <!-- カード 5: MW処理 -->
+            <div class="catalog-card">
+                <div class="card-tag">特殊表面改質処理</div>
+                <div class="card-body">
+                    <h2 class="card-title">MW処理実績データ・表面機能</h2>
+                    <p class="card-desc">マイクロウェーブ表面改質処理（MW処理）による摺動性・耐摩耗性向上の付加機能と、耐久性向上（最大11倍）のテストデータ。</p>
+                    <a href="siryou/MW.html" class="card-btn">資料を見る →</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- お問い合わせエリア -->
+        <div class="contact-section">
+            <h3 class="contact-title">お気軽にお問い合わせ・ご相談ください</h3>
+            <div class="contact-box">
+                <div class="contact-item">
+                    <span class="contact-label">TEL:</span>
+                    <a href="tel:090-1255-1962">090-1255-1962</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">FAX:</span>
+                    <span style="color: var(--primary-red);">048-928-8028</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">E-MAIL:</span>
+                    <a href="mailto:ttk-city@rms-net.com">ttk-city@rms-net.com</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- トップに戻るボタン -->
+    <a href="#" class="pagetop" id="pageTopBtn">▲</a>
+
+    <script>
+        const pageTopBtn = document.getElementById('pageTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                pageTopBtn.classList.add('is-show');
+            } else {
+                pageTopBtn.classList.remove('is-show');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

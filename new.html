@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>転造ダイス製品一覧 | 株式会社RMS</title>
+    <!-- フォント：Noto Sans JP を読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #e60012;
+            --primary-hover: #cc0000;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --text-sub: #666666;
+            --border-color: #e9ecef;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* ヘッダー */
+        .header {
+            width: 100%;
+            height: 60px;
+            background-color: var(--card-bg);
+            border-bottom: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-logo {
+            color: var(--text-main);
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 90px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* ページタイトル */
+        .page-title-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--text-sub);
+            margin: 0;
+        }
+
+        /* 絞り込みフィルターボタン */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-sub);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(230, 0, 18, 0.2);
+        }
+
+        /* 製品グリッド */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+            gap: 25px;
+        }
+
+        /* 製品カード */
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-card-inner {
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+            flex: 1;
+        }
+
+        /* 画像エリア */
+        .product-img-wrapper {
+            width: 110px;
+            height: 110px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .product-img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.08);
+        }
+
+        /* 詳細コンテンツ */
+        .product-content {
+            flex: 1;
+        }
+
+        .product-badge {
+            display: inline-block;
+            background-color: #fce8e6;
+            color: var(--primary-color);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* アクションエリア（フッター） */
+        .product-footer {
+            padding: 12px 25px;
+            background-color: #fafafa;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .inquiry-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .inquiry-btn:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        /* 注意事項・フッター導線 */
+        .bottom-info {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .bottom-info p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .back-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* トップに戻るボタン */
+        .pagetop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(230, 0, 18, 0.3);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .pagetop.is-show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pagetop:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 80px;
+            }
+
+            .page-title {
+                font-size: 1.6rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card-inner {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .product-img-wrapper {
+                width: 100%;
+                height: 140px;
+            }
+
+            .bottom-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <a href="index.html" class="header-logo">株式会社RMS</a>
+        <a href="contact.html" class="inquiry-btn" style="background: var(--primary-color); color: #fff; padding: 6px 14px; border-radius: 4px;">お問い合わせ</a>
+    </header>
+
+    <main class="container">
+        <!-- ページヘッダー -->
+        <div class="page-title-area">
+            <h1 class="page-title">転造ダイス</h1>
+            <p class="page-subtitle">高精度・高品質な各種転造ダイス製品ラインナップ</p>
+        </div>
+
+        <!-- カテゴリ絞り込みボタン -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">すべて表示</button>
+            <button class="filter-btn" data-filter="rack">ラック・ロータリー</button>
+            <button class="filter-btn" data-filter="maru">丸ダイス</button>
+            <button class="filter-btn" data-filter="hirai">平ダイス</button>
+        </div>
+
+        <!-- 製品リスト（2列カード） -->
+        <div class="product-grid">
+
+            <!-- 製品1 -->
+            <div class="product-card" data-category="rack">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i81f2b84a78fb46eb/version/1405299003/%E3%83%A9%E3%83%83%E3%82%AF%E5%BD%A2%E8%BB%A2%E9%80%A0%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="ラック形転造ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: RF</span>
+                        <h2 class="product-name">ラック形転造ダイス</h2>
+                        <p class="product-desc">
+                            主に自動車部品、電気部品などのインボリュートスプライン セレーション・ねじ・ウォームなどを高精度に転造します。<br>
+                            左右（上下）のダイスは等速度でかつ反対方向に運動します。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=RF" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+            <!-- 製品2 -->
+            <div class="product-card" data-category="rack">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i282a8a36ed098ae9/version/1405299027/%E3%83%AD%E3%83%BC%E3%82%BF%E3%83%AA%E3%83%BC%E5%BC%8F%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="ロータリー式ねじ転造ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: RCD-RSD</span>
+                        <h2 class="product-name">ロータリー式ねじ転造ダイス</h2>
+                        <p class="product-desc">
+                            固定されたセグメントダイスと回転する丸ダイスの間を素材が遊星運動しながら転がる間にねじが転造されます。最高峰の生産能力を誇ります。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=RCD-RSD" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+            <!-- 製品3 -->
+            <div class="product-card" data-category="maru">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/id2a34b1a811cbcce/version/1405299043/%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E4%B8%B8%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="ねじ転造丸ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: TR</span>
+                        <h2 class="product-name">ねじ転造丸ダイス</h2>
+                        <p class="product-desc">
+                            一対の丸ダイスを使用し転造する方法です。同方向に回転しかつ同じ周速の2個のダイスにより素材にダイスのねじ山を押し込みながら転造します。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=TR-Maru" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+            <!-- 製品4 -->
+            <div class="product-card" data-category="maru">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/ib3897d5c2fb97886/version/1405299063/%E3%82%BB%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E8%BB%A2%E9%80%A0%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="セレーション転造丸ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: SR</span>
+                        <h2 class="product-name">セレーション転造丸ダイス</h2>
+                        <p class="product-desc">
+                            インボリュートスプライン・セレーション等をインフィード又は押し込み式により転造するダイスです。高精度な歯面が得られます。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=SR" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+            <!-- 製品5 -->
+            <div class="product-card" data-category="maru">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i0caba78f87a5b0e3/version/1405299079/%E7%89%B9%E6%AE%8A%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E4%B8%B8%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="特殊ねじ転造丸ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: TR（特殊）</span>
+                        <h2 class="product-name">特殊ねじ転造丸ダイス</h2>
+                        <p class="product-desc">
+                            転造ヘッドやアタッチメントに取り付けて使用する特殊丸ダイスです。鍔付きのねじや長い軸の一部にねじを転造する場合に使用します。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=TR-Special" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+            <!-- 製品6 -->
+            <div class="product-card" data-category="hirai">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/id6504bbd869bcd2a/version/1405299093/%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E5%B9%B3%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="ねじ転造平ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: DP</span>
+                        <h2 class="product-name">ねじ転造平ダイス</h2>
+                        <p class="product-desc">
+                            一対の平ダイスの一方を固定し、他方を平行往復運動させてねじを転造する方式です。簡単で生産性の良い転造方法です。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=DP" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+            <!-- 製品7 -->
+            <div class="product-card" data-category="hirai">
+                <div class="product-card-inner">
+                    <div class="product-img-wrapper">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s0054f211ee0da790/image/i3f54bc9dbcf77854/version/1405299111/%E3%82%BF%E3%83%83%E3%83%94%E3%83%B3%E3%81%AD%E3%81%98%E8%BB%A2%E9%80%A0%E5%B9%B3%E3%83%80%E3%82%A4%E3%82%B9.jpg"
+                            alt="タッピンねじ転造平ダイス" class="product-img">
+                    </div>
+                    <div class="product-content">
+                        <span class="product-badge">型番: T-DP</span>
+                        <h2 class="product-name">タッピンねじ転造平ダイス</h2>
+                        <p class="product-desc">
+                            自らタッピングでき、ナットの不要なねじを転造するダイスです。各種タイプのタッピン用平ダイスをご用意しております。
+                        </p>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a href="contact.html?product=T-DP" class="inquiry-btn">この製品について問い合わせる →</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 下部インフォメーション -->
+        <div class="bottom-info">
+            <p>💡 製品の価格・特注サイズ・納期については、お気軽にお問い合わせください。</p>
+            <a href="index.html" class="back-link">← トップページに戻る</a>
+        </div>
+    </main>
+
+    <!-- ページトップボタン -->
+    <a href="#" class="pagetop">▲</a>
+
+    <!-- JavaScript：スクロール＆カテゴリフィルター機能 -->
+    <script>
+        // トップに戻るボタン制御
+        const pageTopBtn = document.querySelector('.pagetop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                pageTopBtn.classList.add('is-show');
+            } else {
+                pageTopBtn.classList.remove('is-show');
+            }
+        });
+
+        // カテゴリフィルター制御
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // アクティブクラスの切り替え
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                productCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

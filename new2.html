@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="株式会社RMSは切削工具・電動工具の調達から加工・再利用まで一気通貫で支援します。エンドミルやねじゲージなどの工具を迅速に提供し、生産現場をサポートします。">
+    <title>株式会社RMS</title>
+    <!-- Google Fonts: Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           デザイン変数・カラーパレット設定
+           ========================================== */
+        :root {
+            --primary-red: #ba0d0d;         /* 目に優しく高級感のある赤 */
+            --primary-red-hover: #960a0a;   /* ホバー時の濃い赤 */
+            --red-gradient: linear-gradient(135deg, #c01111 0%, #8b0000 100%);
+            --accent-light-red: #fff5f5;    /* 超薄い赤背景（視認性向上用） */
+            --text-dark: #2b2c30;           /* 本文用ダークグレー（見やすさUP） */
+            --text-sub: #666666;            /* 補足用グレー */
+            --bg-light: #f8f9fa;            /* セクション用の目に優しい背景色 */
+            --bg-white: #ffffff;
+            --border-color: #e5e7eb;        /* 境界線 */
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --container-width: 1100px;
+        }
+
+        /* ==========================================
+           基本スタイル設定
+           ========================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.7;
+            letter-spacing: 0.03em;
+            text-align: center; /* 基本を中央揃えに */
+        }
+
+        /* コンテナ（中央寄せ＆幅制限） */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================
+           ヘッダーエリア
+           ========================================== */
+        header {
+            background-color: var(--bg-white);
+            border-bottom: 2px solid var(--primary-red);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-red);
+            background-color: var(--accent-light-red);
+        }
+
+        .nav-btn {
+            background-color: var(--primary-red);
+            color: #fff !important;
+            border-radius: 20px !important;
+            padding: 8px 20px !important;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn:hover {
+            background-color: var(--primary-red-hover) !important;
+        }
+
+        /* ==========================================
+           ヒーローセクション（メイン画像エリア）
+           ========================================== */
+        .hero {
+            background: var(--red-gradient);
+            color: #ffffff;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.35;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .hero-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ==========================================
+           共通セクションスタイル
+           ========================================== */
+        section {
+            padding: 60px 0;
+        }
+
+        .bg-alt {
+            background-color: var(--bg-light); /* 目に優しいグレー背景 */
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-red);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ボタン共通 */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-red);
+            color: #ffffff;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(186, 13, 13, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(186, 13, 13, 0.3);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background-color: #ffffff;
+            color: var(--primary-red);
+            border: 2px solid #ffffff;
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-light-red);
+            border-color: #ffffff;
+        }
+
+        /* ==========================================
+           カードグリッド（選ばれる理由・サービス）
+           ========================================== */
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-red);
+            border-radius: 10px;
+            padding: 30px 25px;
+            width: calc(33.333% - 20px);
+            min-width: 280px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+           お知らせエリア
+           ========================================== */
+        .news-wrapper {
+            max-width: 850px;
+            margin: 30px auto 0;
+            background-color: var(--bg-white);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+            text-align: left;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item:hover {
+            background-color: var(--accent-light-red);
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            white-space: nowrap;
+        }
+
+        .news-category {
+            font-size: 0.75rem;
+            background-color: var(--primary-red);
+            color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .news-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* ==========================================
+           会社概要エリア（テーブル）
+           ========================================== */
+        .company-table-wrapper {
+            max-width: 850px;
+            margin: 30px auto 0;
+            background: var(--bg-white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .company-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .company-table th, 
+        .company-table td {
+            padding: 18px 25px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .company-table th {
+            width: 25%;
+            background-color: var(--accent-light-red);
+            color: var(--primary-red);
+            font-weight: 700;
+            border-right: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .business-list {
+            padding-left: 0;
+        }
+
+        .business-list li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 6px;
+        }
+
+        .business-list li::before {
+            content: "✓";
+            color: var(--primary-red);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Page Top ボタン */
+        #pageTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary-red);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        #pageTopBtn:hover {
+            background-color: var(--primary-red-hover);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================
+           レスポンシブ対応 (スマホ・タブレット)
+           ========================================== */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .news-item {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .company-table th, 
+            .company-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .company-table th {
+                border-right: none;
+                background-color: var(--accent-light-red);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー（ロゴ・ナビゲーション） -->
+    <header>
+        <div class="container header-inner">
+            <h1 class="logo">株式会社RMS</h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="catalog2.html">製品一覧</a></li>
+                    <li><a href="service.html">サービス</a></li>
+                    <li><a href="case-studies.html">事例</a></li>
+                    <li><a href="otoiawase.html" class="nav-btn">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- ヒーローセクション（メイン画像エリア） -->
+        <section class="hero">
+            <div class="container">
+                <h2>切削工具・電動工具を、仕入れから加工・再利用までワンストップで支援</h2>
+                <p>RMSは、エンドミルやねじゲージなどの切削工具・電動工具をまとめて調達し、加工やリユースまで一貫して対応します。スピードと品質を両立し、御社の生産現場を安定化させます。</p>
+                <div class="hero-buttons">
+                    <a href="otoiawase.html" class="btn">お問い合わせ</a>
+                    <a href="catalog2.html" class="btn-secondary">製品一覧を見る</a>
+                </div>
+                <!-- ★メイン画像★ -->
+                <img src="Gemini_Generated_Image_mlnd8amlnd8amlnd.png" alt="切削工具" class="hero-img" loading="lazy" decoding="async">
+            </div>
+        </section>
+
+        <!-- RMSが選ばれる理由 -->
+        <section class="bg-alt">
+            <div class="container">
+                <h2 class="section-title">RMSが選ばれる理由</h2>
+                <div class="grid-container">
+                    <div class="card">
+                        <h3>迅速な調達</h3>
+                        <p>必要な工具を最短でお届けし、納期の遅れによる現場停止を防ぎます。</p>
+                    </div>
+                    <div class="card">
+                        <h3>加工・再利用対応</h3>
+                        <p>製品の加工・改善だけでなく、再利用・リユースも含めた提案が可能です。</p>
+                    </div>
+                    <div class="card">
+                        <h3>一貫サポート</h3>
+                        <p>仕入れから納品まで、工具に関する相談をまとめて受け付けます。</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <a href="https://www.rms-net.com/" class="btn" target="_blank" rel="noopener noreferrer">公式WEBサイトはこちら</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- サービスエリア -->
+        <section id="services">
+            <div class="container">
+                <h2 class="section-title">サービス</h2>
+                <div class="grid-container">
+                    <div class="card">
+                        <h3>01. 製品販売業</h3>
+                        <p>高品質な機械部品・機器を取り扱い、お客様のニーズに合わせた最適なソリューションをご提案します。</p>
+                    </div>
+                    <div class="card">
+                        <h3>02. 迅速なサポート</h3>
+                        <p>長年の実績と信頼をベースに、お問い合わせから納品までスピーディーに対応いたします。</p>
+                    </div>
+                    <div class="card">
+                        <h3>03. 信頼と実績</h3>
+                        <p>お客様との繋がりを大切にし、常に変化する技術トレンドに対応した柔軟なサービスを提供します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- お知らせエリア -->
+        <section id="news" class="bg-alt">
+            <div class="container">
+                <h2 class="section-title">お知らせ</h2>
+                <div class="news-wrapper">
+                    <a href="#" class="news-item">
+                        <span class="news-date">2026.08.01</span>
+                        <span class="news-category">お知らせ</span>
+                        <span class="news-text">Webサイトをリニューアルオープンいたしました。</span>
+                    </a>
+                    <a href="#" class="news-item">
+                        <span class="news-date">2026.07.15</span>
+                        <span class="news-category">製品情報</span>
+                        <span class="news-text">新製品の取り扱いを開始しました。</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 会社概要エリア -->
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">会社概要</h2>
+                <div class="company-table-wrapper">
+                    <table class="company-table">
+                        <tr>
+                            <th>会社名</th>
+                            <td>株式会社RMS (アールエムエス)</td>
+                        </tr>
+                        <tr>
+                            <th>代表者</th>
+                            <td>鈴木 義久</td>
+                        </tr>
+                        <tr>
+                            <th>所在地</th>
+                            <td>〒340-0032 埼玉県草加市遊馬町1129-2</td>
+                        </tr>
+                        <tr>
+                            <th>TEL</th>
+                            <td>090-1255-1962</td>
+                        </tr>
+                        <tr>
+                            <th>FAX</th>
+                            <td>048-928-8028</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail</th>
+                            <td>ttk-city@rms-net.com</td>
+                        </tr>
+                        <tr>
+                            <th>事業内容</th>
+                            <td>
+                                <ul class="business-list">
+                                    <li>O-RE( レインボー処理 ) HV7000</li>
+                                    <li>B-RE( レインボー処理 ) HV3500</li>
+                                    <li>B-DLC( DLC処理 ) HV2500</li>
+                                    <li>TTKエンドミル輸入元</li>
+                                    <li>CITYエンドミル代理店</li>
+                                    <li>エンドミル研磨</li>
+                                    <li>各種コーティング</li>
+                                    <li>MW処理( マイクロウェーブ )</li>
+                                    <li>カッター・ホルダーのリユース試作</li>
+                                    <li>環境機器・・・浮上油処理装置・スラッジ処理装置</li>
+                                    <li>外段取りパレットチェンジャー・治具</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>公式サイト</th>
+                            <td><a href="https://www.rms-net.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-red); text-decoration: underline;">https://www.rms-net.com/</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Page Top ボタン -->
+    <button id="pageTopBtn" aria-label="ページ上部へ戻る">▲</button>
+
+    <!-- JavaScript -->
+    <script>
+        const pageTopBtn = document.getElementById('pageTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                pageTopBtn.style.display = 'flex';
+            } else {
+                pageTopBtn.style.display = 'none';
+            }
+        });
+
+        pageTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+
+</html>
