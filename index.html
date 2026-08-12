@@ -310,6 +310,74 @@
             font-size: 0.95rem;
         }
 
+
+
+/* 6件目以降を非表示にするためのクラス */
+/* 赤基調のカラー設定 */
+:root {
+    --primary-red: #c62828;      /* メインの赤色 */
+    --primary-red-hover: #9a0007;/* ホバー時の濃い赤 */
+}
+
+/* カテゴリタグの赤基調化 */
+.news-category {
+    background-color: var(--primary-red);
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* ホバー時にテキストを赤く変化 */
+.news-item:hover .news-text {
+    color: var(--primary-red);
+    transition: color 0.2s ease;
+}
+
+/* ▼ 赤基調のボタンデザイン */
+.news-more-wrapper {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.more-btn {
+    display: inline-block;
+    padding: 12px 44px;
+    background-color: var(--primary-red);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(198, 40, 40, 0.25);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.more-btn:hover {
+    background-color: var(--primary-red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(198, 40, 40, 0.35);
+}
+
+/* ▼ 滑らかな開閉アニメーション（CSS Gridアニメーション） */
+.news-more-container {
+    display: grid;
+    grid-template-rows: 0fr; /* 最初は高さを 0 に保持 */
+    transition: grid-template-rows 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* 滑らかなイージング */
+}
+
+.news-more-container.is-open {
+    grid-template-rows: 1fr; /* 開いた時は中身の自動高さへ変化 */
+}
+
+.news-more-inner {
+    overflow: hidden; /* アニメーション中の食み出しを隠す */
+}
+
+
         /* ===================================
            会社概要エリア
         =================================== */
@@ -575,14 +643,14 @@
                 <span class="news-date">2026.08.01</span>
                 <span class="news-category">お知らせ</span>
                 <span class="news-text">Webサイトをリニューアルオープンいたしました。</span>
-            </a>
-            <a href="#" class="news-item">
+                </a>
+                <a href="#" class="news-item">
                 <span class="news-date">2023.11.26</span>
                 <span class="news-category">製品情報</span>
                 <span class="news-text">「エンドミル カタログ」を追加しました。</span>
-</a>
+                </a>
 
- <a href="#" class="news-item">
+                <a href="#" class="news-item">
                 <span class="news-date">2021.01.19</span>
                 <span class="news-category">製品情報</span>
                 <span class="news-text">「台湾製 廉価版エンドミル」を追加しました。</span>
@@ -599,6 +667,10 @@
                 <span class="news-category">お知らせ</span>
                 <span class="news-text">「空気清浄器(salir)」を追加しました。</span>
                 </a>
+
+<!-- ▼ 6件目以降（ボタンを押すと滑らかに開くエリア） -->
+        <div class="news-more-container" id="js-news-more">
+<div class="news-more-inner">
 
                 <a href="#" class="news-item">
                 <span class="news-date">2016.11.28</span>
@@ -708,9 +780,17 @@
                 <span class="news-text">RMS(アールエムエス) HPリニューアルしました。</span>
                 </a>
 
+                </div>
              
+            
+    </div>
+</section>
 
-
+<!-- 追記: 「もっと見る」ボタンのエリア -->
+    <div class="news-more-wrapper">
+        <button type="button" class="more-btn" id="js-news-more-btn" aria-expanded="false">
+            もっと見る
+        </button>
 
 
             </a>
@@ -820,6 +900,34 @@
 
     <button class="hamburger" id="js-hamburger" aria-label="メニューを開く" aria-expanded="false"></button>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const moreBtn = document.getElementById('js-news-more-btn');
+    const moreContainer = document.getElementById('js-news-more');
+
+    if (moreBtn && moreContainer) {
+        moreBtn.addEventListener('click', () => {
+            // 開閉状態をトグル（is-open クラスの着脱）
+            const isOpen = moreContainer.classList.toggle('is-open');
+
+            // ボタンの表示テキストとアクセシビリティ状態を変更
+            moreBtn.setAttribute('aria-expanded', isOpen);
+            moreBtn.textContent = isOpen ? '閉じる' : 'もっと見る';
+
+            // 閉じた際に自動的に「お知らせエリア」の上部へ滑らかにスクロール（不要なら削除可）
+            if (!isOpen) {
+                document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+});
+</script>
+
+
+
 </body>
 
+
+
 </html>
+
