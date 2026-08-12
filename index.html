@@ -476,6 +476,57 @@
             transform: translateY(-5px);
         }
 
+
+/* ===================================
+   お知らせエリアのスマホ崩れ防止CSS
+=================================== */
+
+/* 日付が縮むのを防止 */
+.news-date {
+    font-size: 0.85rem;
+    color: #888888;
+    white-space: nowrap; /* 改行防止 */
+    flex-shrink: 0;       /* 画面が狭くても絶対に潰さない */
+}
+
+/* カテゴリタグ（赤バッジ）の縦書き崩れを完全防止 */
+.news-category {
+    background-color: #e60012; /* 赤色 */
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: inline-block;
+    white-space: nowrap; /* 縦書き・改行を防止 */
+    flex-shrink: 0;       /* 画面が狭くても絶対に潰さない */
+}
+
+/* お知らせテキスト */
+.news-text {
+    font-size: 0.95rem;
+    color: #333333;
+}
+
+/* -----------------------------------
+   スマホ表示時（768px以下）のレイアウト最適化
+----------------------------------- */
+@media (max-width: 768px) {
+    .news-item {
+        flex-wrap: wrap;  /* 幅が狭いときは自動で下段に折り返す */
+        gap: 8px 12px;    /* 要素間のすき間調整 */
+        padding: 14px 15px;
+    }
+
+    /* お知らせの文章を2行目（下段）に広げて読みやすくする */
+    .news-text {
+        width: 100%;
+        margin-top: 2px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
+        
         /* ===================================
            スマホ・タブレット対応 (768px以下)
         =================================== */
