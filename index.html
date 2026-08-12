@@ -35,6 +35,41 @@
             margin: 10px 0;
         }
 
+
+/* ロゴエリア全体の縦並び調整 */
+.logo-text {
+    display: flex;
+    flex-direction: column; /* サブタイトルと会社名を縦に並べる */
+    text-decoration: none;
+    line-height: 1.25;
+}
+
+/* 上に付く小さなサブタイトル */
+.logo-subtitle {
+    font-size: 0.85rem;
+    color: #202020;
+    font-weight: normal;
+    letter-spacing: 0.03em;
+}
+
+/* メインの会社名 */
+.logo-name {
+    color: #e60012;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* スマホ表示時の微調整 */
+@media (max-width: 768px) {
+    .logo-subtitle {
+        font-size: 0.6rem; /* スマホでは邪魔にならないよう小さめに */
+    }
+    .logo-name {
+        font-size: 1.2rem;
+    }
+}
+
+
         /* ===================================
            レスポンシブ固定ヘッダー ＆ ナビ
         =================================== */
@@ -621,10 +656,14 @@
 
 <body>
 
-    <!-- レスポンシブヘッダー -->
+    <!-- 固定ヘッダー -->
     <header class="site-header">
         <div class="header-inner">
-            <a href="#" class="logo-text">株式会社RMS</a>
+<!-- ヘッダーのロゴ部分 -->
+<a href="#" class="logo-text">
+    <span class="logo-subtitle">エンドミル・切削工具の販売・再研磨なら</span>
+    <span class="logo-name">株式会社RMS</span>
+</a>
 
             <!-- ハンバーガーボタン (スマホ用) -->
             <button class="hamburger" id="js-hamburger" aria-label="メニューを開く">
